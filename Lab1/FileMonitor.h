@@ -1,0 +1,4 @@
+#ifndef FILEMONITOR_H
+#define FILEMONITOR_H
+
+#endif // FILEMONITOR_H
