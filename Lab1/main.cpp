@@ -19,7 +19,8 @@ int main(int argc, char *argv[])
     QString path;
     QTextStream stream;
 
-
+    QVector<QString> paths;
+    qDebug().noquote()
     qDebug().noquote()<<"Enter path to file: ";
     //cout.flush();
 

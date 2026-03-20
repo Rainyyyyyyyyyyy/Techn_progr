@@ -7,12 +7,11 @@
 #include <QObject>
 #include <QFileInfo>
 #include <QVector>
+#include <QDebug>
 
 class FileMonitor : public QObject{
 
     Q_OBJECT
-
-    QVector <QFileInfo> Files;
 
 public:
 
@@ -40,5 +39,21 @@ signals:
     void SizeChanged(int newSize);
 
 
+public slots:
+    void CheckStateOfFiles(){
+        QVector <QFileInfo> prev_files = Files;
+        unsigned int n = Files.size();
+        for(unsigned int i=0; i<n; i++){
+            Files[i].refresh();
+            if(Files[i].exists() != prev_files[i].exists()
+                ||  Files[i].size() != prev_files[i].size()){
+                qDebug().noquote()<<Files[i].path()<<": Changed!\n";
+            }
+        }
+    }
+
+
+private:
+    QVector <QFileInfo> Files;
 
 };
