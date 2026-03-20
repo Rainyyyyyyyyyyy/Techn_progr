@@ -8,6 +8,7 @@
 #include <QFileInfo>
 #include <QVector>
 #include <QDebug>
+#include <QTextStream>
 
 class FileMonitor : public QObject{
 
@@ -17,6 +18,9 @@ public:
 
     // конструктор по умолчанию
     FileMonitor(){}
+
+    // деструктор
+    ~FileMonitor(){}
 
     // конструктор по одной строке к одному файлу
     FileMonitor(const QString &QStrPath){
@@ -40,14 +44,19 @@ signals:
 
 
 public slots:
+
     void CheckStateOfFiles(){
+        QTextStream qout(stdout);        // для вывода
+        QTextStream qin(stdin);
+
         QVector <QFileInfo> prev_files = Files;
         unsigned int n = Files.size();
         for(unsigned int i=0; i<n; i++){
             Files[i].refresh();
             if(Files[i].exists() != prev_files[i].exists()
                 ||  Files[i].size() != prev_files[i].size()){
-                qDebug().noquote()<<Files[i].path()<<": Changed!\n";
+                //qDebug().noquote()<<Files[i].path()<<": Changed!\n";
+                qout<<Files[i].absolutePath()<<'/'<<Files[i].baseName()<<": Changed!\n"<<Qt::flush;
             }
         }
     }
