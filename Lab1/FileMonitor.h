@@ -10,6 +10,16 @@
 #include <QDebug>
 #include <QTextStream>
 
+#include "FileList.h"
+#include "Logger.h"
+
+template <class T> void Swap(T &a, T& b){
+    T c = a;
+    a = b;
+    b = c;
+}
+
+
 class FileMonitor : public QObject{
 
     Q_OBJECT
@@ -22,18 +32,28 @@ public:
     // деструктор
     ~FileMonitor(){}
 
-    // конструктор по одной строке к одному файлу
-    FileMonitor(const QString &QStrPath){
-        QFileInfo fileinfo(QStrPath);
-        Files.push_back(fileinfo);
-    }
+    /*// конструктор по одной строке к одному файлу
+    FileMonitor(const QString &QStrPath);
 
     // конструктор по вектору строк к файлам
-    FileMonitor(QVector <QString> &QStrPaths){
-        for(QString path : QStrPaths){
-            Files.push_back(QFileInfo(path));
-        }
-    }
+    FileMonitor(QVector <QString> &QStrPaths);
+
+
+
+    // конструктор по файлу с путями к файлам
+    // НЕДОДЕЛАНА
+    FileMonitor(const QFile &FileList);
+
+
+
+    // файл успешно добавлен под наблюдение - return true
+    // else return false
+    bool add_file(const QString &path);
+
+    // файл под наблюдение - успешно удаляем из-под наблюдения и return true;
+    // else return false
+    bool remove_file(const QString &path);
+*/
 
 signals:
     // изменение имени или удаление файла равноценно - изменить путь к файлу
@@ -45,7 +65,8 @@ signals:
 
 public slots:
 
-    void CheckStateOfFiles(){
+    void CheckStateOfFiles();
+    /*{
         QTextStream qout(stdout);        // для вывода
         QTextStream qin(stdin);
 
@@ -59,10 +80,22 @@ public slots:
                 qout<<Files[i].absolutePath()<<'/'<<Files[i].baseName()<<": Changed!\n"<<Qt::flush;
             }
         }
-    }
+    }*/
 
 
 private:
-    QVector <QFileInfo> Files;
+    /*FileList List;*/          // регулировка списка наблюдаемых файлов
+    /*Logger ConsoleOutput; */   // вывод
+    /* Delayer Delay */ // регулировка задержки
+
+
+
+
+    //QVector <QFileInfo> Files;
+    // флаги на изменение (например заменили символ - размер непоменялся, но содержимое изменилось
+    //QVector <bool> Files_change_flags;
+    // Если создать файл, то QFileInfo сам сделает refresh() (почему-то)
+    // поэтому для отслеживания создания файла - флаги на изменение QFileInfo::exists()
+    //QVector <bool> Files_arrived_flags;
 
 };
