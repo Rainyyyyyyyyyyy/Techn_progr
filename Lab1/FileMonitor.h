@@ -25,9 +25,12 @@ class FileMonitor : public QObject{
     Q_OBJECT
 
 public:
-
+    explicit FileMonitor (QObject *parent = nullptr) : QObject(parent) {}
     // конструктор по умолчанию
-    FileMonitor(){}
+    //FileMonitor(){}
+
+    // конструктор
+    FileMonitor(IFileList *__List, ILogger *__Logger);
 
     // деструктор
     ~FileMonitor(){}
@@ -60,7 +63,7 @@ signals:
     // значит файл изменился, значит файл по прошлому пути можно считать удалённым\утерянным
     void FileLost();
 
-    void SizeChanged(int newSize);
+    void FileChanged(int newSize);
 
 
 public slots:
@@ -84,8 +87,8 @@ public slots:
 
 
 private:
-    /*FileList List;*/          // регулировка списка наблюдаемых файлов
-    /*Logger ConsoleOutput; */   // вывод
+    IFileList *List;          // список наблюдаемых файлов
+    ILogger *ConsoleOutput;    // вывод
     /* Delayer Delay */ // регулировка задержки
 
 

@@ -1,6 +1,27 @@
 #include "FileMonitor.h"
 //#include "FileList.h"
 
+#define EXCEPTION_IFILELIST_IS_NULLPTR 102
+#define EXCEPTION_ILOGGER_IS_NULLPTR 103
+
+// конструктор
+FileMonitor::FileMonitor(IFileList *__List, ILogger *__Logger){
+    if(__List == NULL || __List == nullptr){
+        throw EXCEPTION_IFILELIST_IS_NULLPTR;
+    }
+    if(__Logger == NULL || __Logger == nullptr){
+        throw EXCEPTION_ILOGGER_IS_NULLPTR;
+    }
+    List = __List;
+    ConsoleOutput = __Logger;
+}
+
+
+void FileMonitor::CheckStateOfFiles(){
+
+}
+
+
 /*
 // конструктор по одной строке к одному файлу
 FileMonitor::FileMonitor(const QString &QStrPath){
