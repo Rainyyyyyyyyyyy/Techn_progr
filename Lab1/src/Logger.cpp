@@ -15,3 +15,4 @@ void Logger::Log(const QString &data){
 на вход: QString message = "var_message" - выход: вывод на консоль "var_message\n"
 на вход: "" - выход: вывод на косноль "\n"
 на вход: QString message = "" - выход: вывод на консоль "\n"
+*/

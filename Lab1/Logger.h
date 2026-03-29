@@ -8,6 +8,7 @@
 
 class Logger : public ILogger {
 public:
+    Logger() = default;
     ~Logger() = default;
 
     // определение функции вывода - вывод на консоль QString data
