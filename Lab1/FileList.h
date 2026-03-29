@@ -10,7 +10,8 @@
 #define EXCEPTION_UNABLE_TO_OPEN_FILE 101
 #define EXCEPTION_INDEX_OUT_OF_BOUNDS 102
 
-class FileList: public IFileList{
+
+class FileList: public IFileList<QString>{
 private:
     // Список путей к файлам
     QVector <QString> List;
@@ -46,7 +47,11 @@ public:
     // оператор[]
     QString & operator[](const unsigned int &index);
 
+    // getter
+    const QVector <QString> &getList();
 
+    // size
+    const unsigned int getSize() const;
 
     ~FileList() {}
 };
