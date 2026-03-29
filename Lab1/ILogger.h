@@ -11,7 +11,9 @@ class ILogger
 public:
 
     virtual ~ILogger() = default;
-    virtual void Log(QString data) = 0;
+
+    // функция вывода
+    virtual void Log(const QString &data) = 0;
 };
 
 

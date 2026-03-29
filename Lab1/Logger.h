@@ -10,8 +10,8 @@ class Logger : public ILogger {
 public:
     ~Logger() = default;
 
-    void Log(QString data){
-        qDebug()<<"Log_data: "<<data;
-    }
+    // определение функции вывода - вывод на консоль QString data
+    void Log(const QString &data);
+
 
 };
