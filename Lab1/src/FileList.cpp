@@ -73,9 +73,16 @@ FileList & FileList::operator=(const FileList &s){
 
 
 // getter списка
-const QVector <QString> &FileList::get_list() const{
+const QVector <QString> & FileList::getList(){
     return List;
 }
+
+
+// size
+const unsigned int FileList::getSize() const{
+    return List.size();
+}
+
 
 // оператор[]
 QString & FileList::operator[](const unsigned int &index){
