@@ -30,7 +30,7 @@ public:
     //FileMonitor(){}
 
     // конструктор
-    FileMonitor(IFileList *__List, ILogger *__Logger);
+    FileMonitor(IFileList<QString> *__List, ILogger *__Logger);
 
     // деструктор
     ~FileMonitor(){}
@@ -87,7 +87,7 @@ public slots:
 
 
 private:
-    IFileList *List;          // список наблюдаемых файлов
+    IFileList <QString> *List;      // список наблюдаемых файлов
     ILogger *ConsoleOutput;    // вывод
     /* Delayer Delay */ // регулировка задержки
 

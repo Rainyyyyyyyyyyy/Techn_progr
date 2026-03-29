@@ -5,7 +5,7 @@
 #define EXCEPTION_ILOGGER_IS_NULLPTR 103
 
 // конструктор
-FileMonitor::FileMonitor(IFileList *__List, ILogger *__Logger){
+FileMonitor::FileMonitor(IFileList<QString> *__List, ILogger *__Logger){
     if(__List == NULL || __List == nullptr){
         throw EXCEPTION_IFILELIST_IS_NULLPTR;
     }
@@ -18,7 +18,15 @@ FileMonitor::FileMonitor(IFileList *__List, ILogger *__Logger){
 
 
 void FileMonitor::CheckStateOfFiles(){
-
+    unsigned int N = List->getSize();
+    QVector <QString> oldDataPaths = List->getList();
+    QVector<QFileInfo> oldData;
+    for(unsigned int i=0; i<N; i++){
+        QFileInfo temp(oldDataPaths[i]);
+        oldData.push_back(temp);
+    }
+    /// ДОДЕЛАТЬ
+    ///
 }
 
 
