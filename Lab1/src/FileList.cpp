@@ -7,7 +7,7 @@
 FileList::FileList(const QString &path_to_File_with_List){
     QFile File_with_List(path_to_File_with_List);
 
-    // open file for reading
+
     if (File_with_List.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QTextStream File_content(&File_with_List);
