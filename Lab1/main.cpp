@@ -37,7 +37,16 @@ int main(int argc, char *argv[])
 {
     QTextStream qout(stdout);        // для вывода
     QTextStream qin(stdin);             // для ввода
-
+    /* // Проверка свойств QFileInfo если файл удалился\появился
+    QFileInfo q1("E:\\Z_vsyakoe_dla_echeby\\4k2sem\\Technologii_Programmirovania(Andreeva)\\laba1\\Qt\\try1(git_clone)\\test_files\\testfile1.txt");
+    while(true){
+        qin.readLine();
+        QFileInfo q2("E:\\Z_vsyakoe_dla_echeby\\4k2sem\\Technologii_Programmirovania(Andreeva)\\laba1\\Qt\\try1(git_clone)\\test_files\\testfile1.txt");
+        qDebug()<<q1.size()<<' '<<q2.size();
+        qDebug()<<q1.exists()<<' '<<q2.exists();
+        }
+    return 0;
+    */
     QString path;
     QTextStream stream;
 
@@ -80,7 +89,10 @@ int main(int argc, char *argv[])
         // H:\Documents
     }while(!fileinfo.isFile());*/
 
-    FileMonitor Monitorer(paths);
+    IFileList *LList;
+    IDelayer *DDelayer;
+    ILogger *LLogger;
+    FileMonitor Monitorer(LList, LLogger, DDelayer);
     while(true){
         //fileinfo.refresh();
         Monitorer.CheckStateOfFiles();

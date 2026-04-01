@@ -3,27 +3,45 @@
 
 #define EXCEPTION_IFILELIST_IS_NULLPTR 102
 #define EXCEPTION_ILOGGER_IS_NULLPTR 103
+#define EXCEPTION_IDELAYER_IS_NULLPTR 104
 
 // конструктор
-FileMonitor::FileMonitor(IFileList<QString> *__List, ILogger *__Logger){
+FileMonitor::FileMonitor(IFileList *__List, ILogger *__Logger, IDelayer *__Delayer){
     if(__List == NULL || __List == nullptr){
         throw EXCEPTION_IFILELIST_IS_NULLPTR;
     }
     if(__Logger == NULL || __Logger == nullptr){
         throw EXCEPTION_ILOGGER_IS_NULLPTR;
     }
+    if(__Delayer == NULL || __Delayer == nullptr){
+        throw EXCEPTION_IDELAYER_IS_NULLPTR;
+    }
     List = __List;
     ConsoleOutput = __Logger;
+    Delay = __Delayer;
 }
+
 
 
 void FileMonitor::CheckStateOfFiles(){
     unsigned int N = List->getSize();
-    QVector <QString> oldDataPaths = List->getList();
+    QVector <QString> DataPaths = List->getList();
     QVector<QFileInfo> oldData;
+    QVector<QFileInfo>newData;
     for(unsigned int i=0; i<N; i++){
-        QFileInfo temp(oldDataPaths[i]);
+        QFileInfo temp(DataPaths[i]);
         oldData.push_back(temp);
+        newData.push_back(temp);
+    }
+    while(true)
+    {
+        for(unsigned int i=0; i<N; i++){
+            newData[i].refresh();
+            if(oldData[i].exists() != newData[i].exists()){
+                QString local_msg = (oldData[i].exists())? "Lost" : "Arrived";
+                qDebug()<<newData[i].path()<<" : "<<local_msg;
+            }
+        }
     }
     /// ДОДЕЛАТЬ
     ///

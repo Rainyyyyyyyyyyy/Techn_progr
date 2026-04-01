@@ -12,7 +12,7 @@
 
 #include "FileList.h"
 #include "Logger.h"
-
+#include "Delayer.h"
 template <class T> void Swap(T &a, T& b){
     T c = a;
     a = b;
@@ -30,10 +30,18 @@ public:
     //FileMonitor(){}
 
     // конструктор
-    FileMonitor(IFileList<QString> *__List, ILogger *__Logger);
+    FileMonitor(IFileList *__List = nullptr, ILogger *__Logger = nullptr, IDelayer *__Delayer = nullptr);
 
     // деструктор
-    ~FileMonitor(){}
+    ~FileMonitor(){
+        if(List != NULL && List != nullptr)delete List;
+        if(ConsoleOutput != NULL && ConsoleOutput != nullptr)delete ConsoleOutput;
+        if(Delay != NULL && Delay != nullptr)delete Delay;
+
+        List = NULL;
+        ConsoleOutput = NULL;
+        Delay = NULL;
+    }
 
     /*// конструктор по одной строке к одному файлу
     FileMonitor(const QString &QStrPath);
@@ -87,9 +95,9 @@ public slots:
 
 
 private:
-    IFileList <QString> *List;      // список наблюдаемых файлов
+    IFileList *List;                    // список наблюдаемых файлов
     ILogger *ConsoleOutput;    // вывод
-    /* Delayer Delay */ // регулировка задержки
+    IDelayer *Delay;                // регулировка задержки
 
 
 
