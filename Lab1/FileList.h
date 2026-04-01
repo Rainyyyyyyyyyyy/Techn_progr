@@ -11,7 +11,7 @@
 #define EXCEPTION_INDEX_OUT_OF_BOUNDS 102
 
 
-class FileList: public IFileList<QString>{
+class FileList: public IFileList {
 private:
     // Список путей к файлам
     QVector <QString> List;
@@ -51,7 +51,7 @@ public:
     const QVector <QString> &getList();
 
     // size
-    const unsigned int getSize() const;
+    unsigned int getSize() const;
 
     ~FileList() {}
 };

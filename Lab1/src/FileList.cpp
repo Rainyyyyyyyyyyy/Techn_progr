@@ -79,7 +79,7 @@ const QVector <QString> & FileList::getList(){
 
 
 // size
-const unsigned int FileList::getSize() const{
+unsigned int FileList::getSize() const{
     return List.size();
 }
 
