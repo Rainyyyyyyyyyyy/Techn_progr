@@ -7,5 +7,6 @@
 class IDelayer{
 public:
     virtual ~IDelayer() = default;
+    //IDelayer() = default;
     virtual void wait() = 0;
 };
