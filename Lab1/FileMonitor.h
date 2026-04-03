@@ -71,13 +71,13 @@ signals:
     // значит файл изменился, значит файл по прошлому пути можно считать удалённым\утерянным
 
     // файл существует (сообщение что он существует и его размер)
-    void OnFileExists(int currentSize);
+    void OnFileExists(QString path, int currentSize);
 
     // файл удалён, перемещён или переименован
-    void OnFileLost();
+    void OnFileLost(QString path);
 
     // размер файла изменился на newSize
-    void OnFileChange(int oldSize, int newSize);
+    void OnFileChange(QString path, int oldSize, int newSize);
 
     /*
     // debug
@@ -92,11 +92,11 @@ public slots:
 
 
 // файл существует
-    void OutputEventFileExists(int currentSize);
+    void OutputEventFileExists(const QString &path, const int &currentSize) const;
 // файл удалён, перемещён или переименован
-    void OutputEventFileLost();
+    void OutputEventFileLost(const QString &path) const;
 // размер файла изменился на newSize
-    void OutputEventFileChanged(int oldSize, int newSize);
+    void OutputEventFileChanged(const QString &path, const int &oldSize, const int &newSize) const;
 
 
 

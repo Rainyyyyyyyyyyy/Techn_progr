@@ -38,14 +38,16 @@ void FileMonitor::CheckStateOfFiles(){
         qDebug()<<"===============================================";
         for(unsigned int i=0; i<N; i++){
             newData[i].refresh();
-            if(!newData[i].exists()){   // Файл не найден
-                emit OnFileLost();
-                //continue;
+            if(!newData[i].exists()){
+                // Файл не найден
+                emit OnFileLost(newData[i].filePath());
             }else{
-                if((newData[i].size()) != (oldData[i].size())){    // Размер файла изменился
-                    emit OnFileChange(oldData[i].size(), newData[i].size());
+                if((newData[i].size()) != (oldData[i].size())){
+                    // Размер файла изменился
+                    emit OnFileChange(newData[i].filePath(), oldData[i].size(), newData[i].size());
                 }else{
-                    emit OnFileExists(newData[i].size());     // Файл существует
+                     // Файл существует
+                    emit OnFileExists(newData[i].filePath(), newData[i].size());
                 }
             }
 
@@ -70,18 +72,18 @@ void FileMonitor::CheckStateOfFiles(){
 
 
 // файл существует
-void FileMonitor::OutputEventFileExists(int currentSize){
-    ConsoleOutput->Log("File is exists. Size: " + QString::number(currentSize) + " bytes.");
+void FileMonitor::OutputEventFileExists(const QString &path, const int &currentSize) const{
+    ConsoleOutput->Log(path + " --- File is exists. Size: " + QString::number(currentSize) + " bytes.");
 }
 
 // файл удалён, перемещён или переименован
-void FileMonitor::OutputEventFileLost(){
-    ConsoleOutput->Log("File has been deleted, replaced or renamed");
+void FileMonitor::OutputEventFileLost(const QString &path) const {
+    ConsoleOutput->Log(path + " --- File has been deleted, replaced or renamed");
 }
 
 // размер файла изменился на newSize
-void FileMonitor::OutputEventFileChanged(int oldSize, int newSize){
-    ConsoleOutput->Log("Size has been changed. Size:  " + QString::number(oldSize) + " -> " + QString::number(newSize) + " bytes.");
+void FileMonitor::OutputEventFileChanged(const QString &path, const int &oldSize, const int &newSize) const {
+    ConsoleOutput->Log(path + " --- Size has been changed. Size:  " + QString::number(oldSize) + " -> " + QString::number(newSize) + " bytes.");
 }
 
 
