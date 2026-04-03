@@ -69,14 +69,37 @@ public:
 signals:
     // изменение имени или удаление файла равноценно - изменить путь к файлу
     // значит файл изменился, значит файл по прошлому пути можно считать удалённым\утерянным
-    void FileLost();
 
-    void FileChanged(int newSize);
+    // файл существует (сообщение что он существует и его размер)
+    void OnFileExists(int currentSize);
 
+    // файл удалён, перемещён или переименован
+    void OnFileLost();
+
+    // размер файла изменился на newSize
+    void OnFileChange(int oldSize, int newSize);
+
+    /*
+    // debug
+    void smth_changed(){
+        ConsoleOutput->Log("Debug output");
+    }
+*/
 
 public slots:
 
     void CheckStateOfFiles();
+
+
+// файл существует
+    void OutputEventFileExists(int currentSize);
+// файл удалён, перемещён или переименован
+    void OutputEventFileLost();
+// размер файла изменился на newSize
+    void OutputEventFileChanged(int oldSize, int newSize);
+
+
+
     /*{
         QTextStream qout(stdout);        // для вывода
         QTextStream qin(stdin);
