@@ -1,20 +1,18 @@
 #include "FileMonitor.h"
 //#include "FileList.h"
 
-#define EXCEPTION_IFILELIST_IS_NULLPTR 102
-#define EXCEPTION_ILOGGER_IS_NULLPTR 103
-#define EXCEPTION_IDELAYER_IS_NULLPTR 104
+
 
 // конструктор
 FileMonitor::FileMonitor(IFileList *__List, ILogger *__Logger, IDelayer *__Delayer){
     if(__List == NULL || __List == nullptr){
-        throw EXCEPTION_IFILELIST_IS_NULLPTR;
+        throw new ExceptionIFileListIsNull;
     }
     if(__Logger == NULL || __Logger == nullptr){
-        throw EXCEPTION_ILOGGER_IS_NULLPTR;
+        throw new ExceptionILoggerIsNull;
     }
     if(__Delayer == NULL || __Delayer == nullptr){
-        throw EXCEPTION_IDELAYER_IS_NULLPTR;
+        throw new ExceptionIDelayerIsNull;
     }
     List = __List;
     ConsoleOutput = __Logger;
@@ -25,6 +23,7 @@ FileMonitor::FileMonitor(IFileList *__List, ILogger *__Logger, IDelayer *__Delay
 
 void FileMonitor::CheckStateOfFiles(){
     unsigned int N = List->getSize();
+    if(N==0)throw new ExceptionFileListIsEmpty;
     QVector <QString> DataPaths = List->getList();
     QVector<QFileInfo> oldData;
     QVector<QFileInfo> newData;
@@ -51,9 +50,6 @@ void FileMonitor::CheckStateOfFiles(){
                 }
             }
 
-            //if(oldData[i].exists() != newData[i].exists()){
-            //QString local_msg = (oldData[i].exists())? "Lost" : "Arrived";
-            //qDebug()<<newData[i].path()<<" : "<<local_msg;
             oldData[i] = newData[i];        // Обновление старых данных под новые
             //newData[i].refresh();           // Обновление новых данных на след. итерацию
         }
@@ -61,12 +57,7 @@ void FileMonitor::CheckStateOfFiles(){
 
         Delay->wait();
     }
-    // smth_changed() изменяет поля
-    // в мейне делается коннект smth_changed и функции вывода Logger::log
-    //emit smth_changed();
 
-    /// ДОДЕЛАТЬ
-    ///
 }
 
 
