@@ -13,6 +13,10 @@
 #include "FileList.h"
 #include "Logger.h"
 #include "Delayer.h"
+
+#include "FileMonitorExceptions.h"
+
+
 template <class T> void Swap(T &a, T& b){
     T c = a;
     a = b;
