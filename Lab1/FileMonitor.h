@@ -12,7 +12,7 @@
 
 #include "FileList.h"
 #include "Logger.h"
-
+#include "Delayer.h"
 template <class T> void Swap(T &a, T& b){
     T c = a;
     a = b;
@@ -30,10 +30,18 @@ public:
     //FileMonitor(){}
 
     // конструктор
-    FileMonitor(IFileList<QString> *__List, ILogger *__Logger);
+    FileMonitor(IFileList *__List = nullptr, ILogger *__Logger = nullptr, IDelayer *__Delayer = nullptr);
 
     // деструктор
-    ~FileMonitor(){}
+    ~FileMonitor(){
+        if(List != NULL && List != nullptr)delete List;
+        if(ConsoleOutput != NULL && ConsoleOutput != nullptr)delete ConsoleOutput;
+        if(Delay != NULL && Delay != nullptr)delete Delay;
+
+        List = NULL;
+        ConsoleOutput = NULL;
+        Delay = NULL;
+    }
 
     /*// конструктор по одной строке к одному файлу
     FileMonitor(const QString &QStrPath);
@@ -61,14 +69,37 @@ public:
 signals:
     // изменение имени или удаление файла равноценно - изменить путь к файлу
     // значит файл изменился, значит файл по прошлому пути можно считать удалённым\утерянным
-    void FileLost();
 
-    void FileChanged(int newSize);
+    // файл существует (сообщение что он существует и его размер)
+    void OnFileExists(int currentSize);
 
+    // файл удалён, перемещён или переименован
+    void OnFileLost();
+
+    // размер файла изменился на newSize
+    void OnFileChange(int oldSize, int newSize);
+
+    /*
+    // debug
+    void smth_changed(){
+        ConsoleOutput->Log("Debug output");
+    }
+*/
 
 public slots:
 
     void CheckStateOfFiles();
+
+
+// файл существует
+    void OutputEventFileExists(int currentSize);
+// файл удалён, перемещён или переименован
+    void OutputEventFileLost();
+// размер файла изменился на newSize
+    void OutputEventFileChanged(int oldSize, int newSize);
+
+
+
     /*{
         QTextStream qout(stdout);        // для вывода
         QTextStream qin(stdin);
@@ -87,9 +118,9 @@ public slots:
 
 
 private:
-    IFileList <QString> *List;      // список наблюдаемых файлов
+    IFileList *List;                    // список наблюдаемых файлов
     ILogger *ConsoleOutput;    // вывод
-    /* Delayer Delay */ // регулировка задержки
+    IDelayer *Delay;                // регулировка задержки
 
 
 

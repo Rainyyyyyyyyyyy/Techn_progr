@@ -3,31 +3,93 @@
 
 #define EXCEPTION_IFILELIST_IS_NULLPTR 102
 #define EXCEPTION_ILOGGER_IS_NULLPTR 103
+#define EXCEPTION_IDELAYER_IS_NULLPTR 104
 
 // конструктор
-FileMonitor::FileMonitor(IFileList<QString> *__List, ILogger *__Logger){
+FileMonitor::FileMonitor(IFileList *__List, ILogger *__Logger, IDelayer *__Delayer){
     if(__List == NULL || __List == nullptr){
         throw EXCEPTION_IFILELIST_IS_NULLPTR;
     }
     if(__Logger == NULL || __Logger == nullptr){
         throw EXCEPTION_ILOGGER_IS_NULLPTR;
     }
+    if(__Delayer == NULL || __Delayer == nullptr){
+        throw EXCEPTION_IDELAYER_IS_NULLPTR;
+    }
     List = __List;
     ConsoleOutput = __Logger;
+    Delay = __Delayer;
 }
+
 
 
 void FileMonitor::CheckStateOfFiles(){
     unsigned int N = List->getSize();
-    QVector <QString> oldDataPaths = List->getList();
+    QVector <QString> DataPaths = List->getList();
     QVector<QFileInfo> oldData;
+    QVector<QFileInfo> newData;
     for(unsigned int i=0; i<N; i++){
-        QFileInfo temp(oldDataPaths[i]);
+        QFileInfo temp(DataPaths[i]);
         oldData.push_back(temp);
+        newData.push_back(temp);
     }
+
+    while(true){
+        qDebug()<<"===============================================";
+        for(unsigned int i=0; i<N; i++){
+            newData[i].refresh();
+            if(!newData[i].exists()){   // Файл не найден
+                emit OnFileLost();
+                //continue;
+            }else{
+                if((newData[i].size()) != (oldData[i].size())){    // Размер файла изменился
+                    emit OnFileChange(oldData[i].size(), newData[i].size());
+                }else{
+                    emit OnFileExists(newData[i].size());     // Файл существует
+                }
+            }
+
+            //if(oldData[i].exists() != newData[i].exists()){
+            //QString local_msg = (oldData[i].exists())? "Lost" : "Arrived";
+            //qDebug()<<newData[i].path()<<" : "<<local_msg;
+            oldData[i] = newData[i];        // Обновление старых данных под новые
+            //newData[i].refresh();           // Обновление новых данных на след. итерацию
+        }
+        qDebug()<<"===============================================";
+
+        Delay->wait();
+    }
+    // smth_changed() изменяет поля
+    // в мейне делается коннект smth_changed и функции вывода Logger::log
+    //emit smth_changed();
+
     /// ДОДЕЛАТЬ
     ///
 }
+
+
+
+// файл существует
+void FileMonitor::OutputEventFileExists(int currentSize){
+    ConsoleOutput->Log("File is exists. Size: " + QString::number(currentSize) + " bytes.");
+}
+
+// файл удалён, перемещён или переименован
+void FileMonitor::OutputEventFileLost(){
+    ConsoleOutput->Log("File has been deleted, replaced or renamed");
+}
+
+// размер файла изменился на newSize
+void FileMonitor::OutputEventFileChanged(int oldSize, int newSize){
+    ConsoleOutput->Log("Size has been changed. Size:  " + QString::number(oldSize) + " -> " + QString::number(newSize) + " bytes.");
+}
+
+
+
+
+
+
+
 
 
 /*

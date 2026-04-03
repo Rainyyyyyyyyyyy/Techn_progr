@@ -10,11 +10,15 @@ private:
     unsigned int seconds;
 public:
     // конструктор по значению
-    Delayer(unsigned int s) : seconds(s) {}
+    Delayer(unsigned int s) {
+        if(s < 1)s = 1;
+        seconds = s;
+    }
     // конструктор по умолчанию
     Delayer(){ seconds = 1; }
     // деструктор
     ~Delayer(){}
+
     void wait(){
         QThread::sleep(seconds);
     }
