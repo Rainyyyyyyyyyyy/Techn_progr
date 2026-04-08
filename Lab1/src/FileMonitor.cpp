@@ -1,20 +1,18 @@
 #include "FileMonitor.h"
 //#include "FileList.h"
 
-#define EXCEPTION_IFILELIST_IS_NULLPTR 102
-#define EXCEPTION_ILOGGER_IS_NULLPTR 103
-#define EXCEPTION_IDELAYER_IS_NULLPTR 104
+
 
 // конструктор
 FileMonitor::FileMonitor(IFileList *__List, ILogger *__Logger, IDelayer *__Delayer){
     if(__List == NULL || __List == nullptr){
-        throw EXCEPTION_IFILELIST_IS_NULLPTR;
+        throw new ExceptionIFileListIsNull;
     }
     if(__Logger == NULL || __Logger == nullptr){
-        throw EXCEPTION_ILOGGER_IS_NULLPTR;
+        throw new ExceptionILoggerIsNull;
     }
     if(__Delayer == NULL || __Delayer == nullptr){
-        throw EXCEPTION_IDELAYER_IS_NULLPTR;
+        throw new ExceptionIDelayerIsNull;
     }
     List = __List;
     ConsoleOutput = __Logger;
@@ -25,6 +23,7 @@ FileMonitor::FileMonitor(IFileList *__List, ILogger *__Logger, IDelayer *__Delay
 
 void FileMonitor::CheckStateOfFiles(){
     unsigned int N = List->getSize();
+    if(N==0)throw new ExceptionFileListIsEmpty;
     QVector <QString> DataPaths = List->getList();
     QVector<QFileInfo> oldData;
     QVector<QFileInfo> newData;
@@ -38,20 +37,19 @@ void FileMonitor::CheckStateOfFiles(){
         qDebug()<<"===============================================";
         for(unsigned int i=0; i<N; i++){
             newData[i].refresh();
-            if(!newData[i].exists()){   // Файл не найден
-                emit OnFileLost();
-                //continue;
+            if(!newData[i].exists()){
+                // Файл не найден
+                emit OnFileLost(newData[i].filePath());
             }else{
-                if((newData[i].size()) != (oldData[i].size())){    // Размер файла изменился
-                    emit OnFileChange(oldData[i].size(), newData[i].size());
+                if((newData[i].size()) != (oldData[i].size())){
+                    // Размер файла изменился
+                    emit OnFileChange(newData[i].filePath(), oldData[i].size(), newData[i].size());
                 }else{
-                    emit OnFileExists(newData[i].size());     // Файл существует
+                     // Файл существует
+                    emit OnFileExists(newData[i].filePath(), newData[i].size());
                 }
             }
 
-            //if(oldData[i].exists() != newData[i].exists()){
-            //QString local_msg = (oldData[i].exists())? "Lost" : "Arrived";
-            //qDebug()<<newData[i].path()<<" : "<<local_msg;
             oldData[i] = newData[i];        // Обновление старых данных под новые
             //newData[i].refresh();           // Обновление новых данных на след. итерацию
         }
@@ -59,29 +57,24 @@ void FileMonitor::CheckStateOfFiles(){
 
         Delay->wait();
     }
-    // smth_changed() изменяет поля
-    // в мейне делается коннект smth_changed и функции вывода Logger::log
-    //emit smth_changed();
 
-    /// ДОДЕЛАТЬ
-    ///
 }
 
 
 
 // файл существует
-void FileMonitor::OutputEventFileExists(int currentSize){
-    ConsoleOutput->Log("File is exists. Size: " + QString::number(currentSize) + " bytes.");
+void FileMonitor::OutputEventFileExists(const QString &path, const int &currentSize) const{
+    ConsoleOutput->Log(path + " --- File is exists. Size: " + QString::number(currentSize) + " bytes.");
 }
 
 // файл удалён, перемещён или переименован
-void FileMonitor::OutputEventFileLost(){
-    ConsoleOutput->Log("File has been deleted, replaced or renamed");
+void FileMonitor::OutputEventFileLost(const QString &path) const {
+    ConsoleOutput->Log(path + " --- File has been deleted, replaced or renamed");
 }
 
 // размер файла изменился на newSize
-void FileMonitor::OutputEventFileChanged(int oldSize, int newSize){
-    ConsoleOutput->Log("Size has been changed. Size:  " + QString::number(oldSize) + " -> " + QString::number(newSize) + " bytes.");
+void FileMonitor::OutputEventFileChanged(const QString &path, const int &oldSize, const int &newSize) const {
+    ConsoleOutput->Log(path + " --- Size has been changed. Size:  " + QString::number(oldSize) + " -> " + QString::number(newSize) + " bytes.");
 }
 
 
