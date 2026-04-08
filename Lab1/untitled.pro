@@ -18,6 +18,10 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    Delayer.h \
+    FileMonitorExceptions.h \
+    IDelayer.h \
+    IException.h \
     ILogger.h \
     Logger.h \
     IFileList.h \
