@@ -19,6 +19,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     Delayer.h \
+    FileListExceptions.hpp \
     FileMonitorExceptions.h \
     IDelayer.h \
     IException.h \
