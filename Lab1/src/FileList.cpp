@@ -16,7 +16,7 @@ FileList::FileList(const QString &path_to_File_with_List){
             //List.push_back(temp_path);
         }
     }else{
-        throw EXCEPTION_UNABLE_TO_OPEN_FILE;
+        throw new ExceptionUnableToOpenFile; // EXCEPTION_UNABLE_TO_OPEN_FILE;
     }
 }
 
@@ -48,8 +48,9 @@ void FileList::refreshList(const QString &new_path_to_File_with_List){
             //List.push_back(temp_path);
         }
     }else{
-        throw EXCEPTION_UNABLE_TO_OPEN_FILE;
+        throw new ExceptionUnableToOpenFile;    // EXCEPTION_UNABLE_TO_OPEN_FILE;
     }
+    File_with_List.close();
 }
 
 // обновить список (List) файлов по массиву путей
@@ -87,7 +88,7 @@ unsigned int FileList::getSize() const{
 // оператор[]
 QString & FileList::operator[](const unsigned int &index){
     if(index >= List.size()){
-        throw EXCEPTION_INDEX_OUT_OF_BOUNDS;
+        throw new ExceptionIndexOutOfBounds; //EXCEPTION_INDEX_OUT_OF_BOUNDS;
     }
     return List[index];
 }
