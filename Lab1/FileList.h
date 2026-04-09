@@ -4,11 +4,8 @@
 #endif // FILELIST_H
 
 #include "IFileList.h"
+#include "FileListExceptions.hpp"
 #include <QFile>
-
-// коды возможных ошибок(исключений)
-#define EXCEPTION_UNABLE_TO_OPEN_FILE 101
-#define EXCEPTION_INDEX_OUT_OF_BOUNDS 102
 
 
 class FileList: public IFileList {
