@@ -57,15 +57,29 @@ void FileMonitor::CheckStateOfFiles(){
         if(N==0)throw new ExceptionFileListIsEmpty;
         //N = List->getSize();
         DataPaths = List->getList();
-        oldData.clear();
+        //oldData.clear();
         newData.clear();
         //QVector<QFileInfo> oldData;
         //QVector<QFileInfo> newData;
+        unsigned int old_N = oldData.size();
         for(unsigned int i=0; i<N; i++){
             QFileInfo temp(DataPaths[i]);
-            oldData.push_back(temp);
-            newData.push_back(temp);
+            bool flag_not_new = true;
+            unsigned int j = 0;
+            for(j=0; j<old_N; j++){
+                if(temp.absoluteFilePath() == oldData[j].absoluteFilePath()){
+                    flag_not_new = false;
+                    break;
+                }
+            }
+            if(flag_not_new == true){
+                newData.push_back(temp);
+            }else newData.push_back(oldData[j]);
+            //oldData.push_back(temp);
+            //newData.push_back(temp);
         }
+        oldData.clear();
+        oldData = newData;
         qDebug()<<"===============================================";
 
         Delay->wait();
