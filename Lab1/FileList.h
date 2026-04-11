@@ -12,6 +12,7 @@ class FileList: public IFileList {
 private:
     // Список путей к файлам
     QVector <QString> List;
+    QString PathToList;
 
 
 
@@ -37,6 +38,7 @@ public:
 
     void refreshList(const QString &new_path_to_File_with_List);
     void refreshList(const QVector <QString> &new_paths);
+    void refreshList();
 
     // getter списка
     const QVector <QString> &get_list() const;
@@ -45,7 +47,8 @@ public:
     QString & operator[](const unsigned int &index);
 
     // getter
-    const QVector <QString> &getList();
+    const QVector <QString> &getList() const;
+    const QString &getPathToList() const;
 
     // size
     unsigned int getSize() const;
