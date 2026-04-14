@@ -74,14 +74,6 @@ void FileMonitor::CheckStateOfFiles(){
                 }
             }
             if(flag_not_new == true){
-                try{
-                    if(temp.absolutePath() == ""){
-                        throw new ExceptionFilePathInFileListIsEmpty;
-                    }
-                }catch(Exceptions *excp){
-                    qDebug()<<(excp->what())<<"  Code: "<<excp->getCode();
-                    continue;
-                }
                 newData.push_back(temp);
             }else newData.push_back(oldData[j]);
             //oldData.push_back(temp);
