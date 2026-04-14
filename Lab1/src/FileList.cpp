@@ -38,7 +38,7 @@ FileList::FileList(const FileList &s){
 }
 
 
-
+/*
 // обновить список (List) файлов по файлу с путями
 void FileList::refreshList(const QString &new_path_to_File_with_List){
     PathToList = new_path_to_File_with_List;
@@ -66,7 +66,7 @@ void FileList::refreshList(const QVector <QString> &new_paths){
         add_path(new_paths[i]);
     }
 }
-
+*/
 void FileList::refreshList(){
     if(PathToList == ""){
         throw new ExceptionFilePathToListIsEmpty;
