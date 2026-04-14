@@ -36,8 +36,8 @@ public:
     // перегрузка =
     FileList &operator=(const FileList &s);
 
-    void refreshList(const QString &new_path_to_File_with_List);
-    void refreshList(const QVector <QString> &new_paths);
+    //void refreshList(const QString &new_path_to_File_with_List);
+    //void refreshList(const QVector <QString> &new_paths);
     void refreshList();
 
     // getter списка
