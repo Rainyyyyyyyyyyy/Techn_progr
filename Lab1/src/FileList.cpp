@@ -78,7 +78,7 @@ void FileList::refreshList(){
         QTextStream File_content(&File_with_List);
         while(!File_content.atEnd()){
             QString temp_path = File_content.readLine();
-            add_path(temp_path);
+            if(!temp_path.isEmpty())add_path(temp_path);
             //List.push_back(temp_path);
         }
     }else{

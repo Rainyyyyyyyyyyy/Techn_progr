@@ -8,6 +8,7 @@
 #define EXCEPTION_ILOGGER_IS_NULLPTR 103
 #define EXCEPTION_IDELAYER_IS_NULLPTR 104
 #define EXCEPTION_FILELIST_IS_EMPTY 105
+#define EXCEPTION_FILEPATH_IN_LIST_IS_EMPTY 106
 
 /* Исключение: IFileList == nullptr || IFileList == NULL */
 class ExceptionIFileListIsNull : public Exceptions {
@@ -47,6 +48,16 @@ public:
 
     const char * what() const noexcept override{
         return "Error: Empty Filelist!";
+    }
+};
+
+/* Исключение: в FileList попался пустой путь */
+class ExceptionFilePathInFileListIsEmpty : public Exceptions {
+public:
+    ExceptionFilePathInFileListIsEmpty() : Exceptions(EXCEPTION_FILEPATH_IN_LIST_IS_EMPTY){}
+
+    const char * what() const noexcept override{
+        return "Error: Empty FilePath in FIleList!";
     }
 };
 
