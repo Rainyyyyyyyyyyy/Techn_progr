@@ -22,6 +22,7 @@ FileList::FileList(const QString &path_to_File_with_List){
     }
 }
 
+/*
 // конструктор по массиву путей
 FileList::FileList(const QVector <QString> &paths){
     PathToList = "";
@@ -31,7 +32,7 @@ FileList::FileList(const QVector <QString> &paths){
     }
     //List = paths;
 }
-
+*/
 // конструктор копирования
 FileList::FileList(const FileList &s){
     List = s.List;
@@ -116,7 +117,7 @@ unsigned int FileList::getSize() const{
 
 // оператор[]
 QString & FileList::operator[](const unsigned int &index){
-    if(index >= List.size()){
+    if(index >= static_cast<unsigned int>(List.size())){
         throw new ExceptionIndexOutOfBounds; //EXCEPTION_INDEX_OUT_OF_BOUNDS;
     }
     return List[index];
@@ -125,7 +126,7 @@ QString & FileList::operator[](const unsigned int &index){
 // добавить в список путь к файлу (return true)
 // если файл уже есть, то не добавлять (return false)
 bool FileList::add_path(const QString &path){
-    unsigned int N = List.size();
+    unsigned int N = static_cast<unsigned int>(List.size());
     for(unsigned int i=0; i<N; i++){
         if(path == List[i]){
             return false;
