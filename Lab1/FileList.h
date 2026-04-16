@@ -28,7 +28,7 @@ public:
     FileList(const QString &path_to_File_with_List);
 
     // конструктор по массиву путей
-    FileList(const QVector <QString> &paths);
+    //FileList(const QVector <QString> &paths);
 
     // конструктор копирования
     FileList(const FileList &s);
