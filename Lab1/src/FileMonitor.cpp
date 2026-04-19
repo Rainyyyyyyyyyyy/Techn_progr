@@ -22,18 +22,18 @@ FileMonitor::FileMonitor(IFileList *__List, ILogger *__Logger, IDelayer *__Delay
 
 
 void FileMonitor::CheckStateOfFiles(){
-    unsigned int N = List->getSize();
-    if(N==0)throw new ExceptionFileListIsEmpty;
-    QVector <QString> DataPaths = List->getList();
+    unsigned int N = 0;  // = List->getSize();
+    QVector <QString> DataPaths; // = List->getList();
     QVector<QFileInfo> oldData;
     QVector<QFileInfo> newData;
-    for(unsigned int i=0; i<N; i++){
+    /*for(unsigned int i=0; i<N; i++){
         QFileInfo temp(DataPaths[i]);
         oldData.push_back(temp);
         newData.push_back(temp);
-    }
+    }*/
 
     while(true){
+        Delay->wait();
         qDebug()<<"===============================================";
         for(unsigned int i=0; i<N; i++){
             newData[i].refresh();
@@ -53,9 +53,37 @@ void FileMonitor::CheckStateOfFiles(){
             oldData[i] = newData[i];        // Обновление старых данных под новые
             //newData[i].refresh();           // Обновление новых данных на след. итерацию
         }
+        List->refreshList();
+        N = List->getSize();
+        if(N==0)throw new ExceptionFileListIsEmpty;
+        //N = List->getSize();
+        DataPaths = List->getList();
+        //oldData.clear();
+        newData.clear();
+        //QVector<QFileInfo> oldData;
+        //QVector<QFileInfo> newData;
+        unsigned int old_N = oldData.size();
+        for(unsigned int i=0; i<N; i++){
+            QFileInfo temp(DataPaths[i]);
+            bool flag_not_new = true;
+            unsigned int j = 0;
+            for(j=0; j<old_N; j++){
+                if(temp.absoluteFilePath() == oldData[j].absoluteFilePath()){
+                    flag_not_new = false;
+                    break;
+                }
+            }
+            if(flag_not_new == true){
+                newData.push_back(temp);
+            }else newData.push_back(oldData[j]);
+            //oldData.push_back(temp);
+            //newData.push_back(temp);
+        }
+        oldData.clear();
+        oldData = newData;
         qDebug()<<"===============================================";
 
-        Delay->wait();
+
     }
 
 }

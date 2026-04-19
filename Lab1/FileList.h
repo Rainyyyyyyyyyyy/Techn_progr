@@ -4,17 +4,15 @@
 #endif // FILELIST_H
 
 #include "IFileList.h"
+#include "FileListExceptions.hpp"
 #include <QFile>
-
-// коды возможных ошибок(исключений)
-#define EXCEPTION_UNABLE_TO_OPEN_FILE 101
-#define EXCEPTION_INDEX_OUT_OF_BOUNDS 102
 
 
 class FileList: public IFileList {
 private:
     // Список путей к файлам
     QVector <QString> List;
+    QString PathToList;
 
 
 
@@ -30,7 +28,7 @@ public:
     FileList(const QString &path_to_File_with_List);
 
     // конструктор по массиву путей
-    FileList(const QVector <QString> &paths);
+    //FileList(const QVector <QString> &paths);
 
     // конструктор копирования
     FileList(const FileList &s);
@@ -38,8 +36,9 @@ public:
     // перегрузка =
     FileList &operator=(const FileList &s);
 
-    void refreshList(const QString &new_path_to_File_with_List);
-    void refreshList(const QVector <QString> &new_paths);
+    //void refreshList(const QString &new_path_to_File_with_List);
+    //void refreshList(const QVector <QString> &new_paths);
+    void refreshList();
 
     // getter списка
     const QVector <QString> &get_list() const;
@@ -48,7 +47,8 @@ public:
     QString & operator[](const unsigned int &index);
 
     // getter
-    const QVector <QString> &getList();
+    const QVector <QString> &getList() const;
+    const QString &getPathToList() const;
 
     // size
     unsigned int getSize() const;
