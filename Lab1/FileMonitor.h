@@ -10,12 +10,11 @@
 #include <QDebug>
 #include <QTextStream>
 
-#include "FileList.h"
 #include "Logger.h"
 #include "Delayer.h"
 
 #include "FileMonitorExceptions.h"
-#include "FileListExceptions.hpp"
+
 
 
 template <class T> void Swap(T &a, T& b){
