@@ -10,6 +10,7 @@
 #include "FileMonitor.h"
 
 #include "IException.h"
+
 //using namespace std;
 
 QTextStream cin(stdin);
@@ -37,15 +38,16 @@ QTextStream cin(stdin);
 */
 int main(int argc, char *argv[])
 {
+
     //QTextStream qout(stdout);        // для вывода
     QTextStream qin(stdin);             // для ввода
 
     QString path;
     //QTextStream stream;
 
-    QVector<QString> paths;
+    //QVector<QString> paths;
     // qDebug().noquote() ~ std::cout
-    unsigned int N = 0;
+    //unsigned int N = 0;
 
     do{
         qDebug()<<"Enter path to file-list: ";
@@ -76,30 +78,30 @@ int main(int argc, char *argv[])
     }
     */
 
-    IFileList *FileList1;// = new FileList(paths);
+    //IFileList *FileList1;// = new FileList(paths);
     IDelayer *Delayer1;// = new Delayer(1);
-    Logger *Logger1;// = new Logger();
+    //Logger *Logger1;// = new Logger();
     try{
-        FileList1 = new FileList(path);
+        //FileList1 = new FileList(path);
         Delayer1 = new Delayer(1);
-        Logger1 = new Logger();
+        //Logger1 = new Logger();
 
-        if(FileList1 == NULL || FileList1 == nullptr){
+        /*if(FileList1 == NULL || FileList1 == nullptr){
             throw new ExceptionIFileListIsNull;
-        }
-        if(Logger1 == NULL || Logger1 == nullptr){
-            throw new ExceptionILoggerIsNull;
-        }
-        if(Delayer1 == NULL || Delayer1 == nullptr){
-            throw new ExceptionIDelayerIsNull;
-        }
-    }catch (Exceptions *excp){
-        qDebug()<<(excp->what())<<"  Code: "<<excp->getCode();
-        delete excp;
-        return 0;
+        }*/
+        //if(Logger1 == NULL || Logger1 == nullptr){
+        //    throw new ExceptionILoggerIsNull;
+        //}
+        //if(Delayer1 == NULL || Delayer1 == nullptr){
+        //    throw new ExceptionIDelayerIsNull;
+        //}
+    }catch (CustomExceptions excp){
+        qDebug()<<(excp.what())<<"  Code: "<<excp.getCode();
+        //delete excp;
+        return 1;
     }
-    FileMonitor FileMonitor1(FileList1, Logger1, Delayer1);
-
+    //FileMonitor FileMonitor1(FileList1, Logger1, Delayer1);
+    FileMonitor FileMonitor1(path);
         //QObject::connect(&boss, &Employee::salaryChanged, PrintInfoSalaryA);
     //QObject::connect(&FileMonitor1, &FileMonitor::CheckStateOfFiles, )
 
@@ -107,11 +109,15 @@ int main(int argc, char *argv[])
     QObject::connect(&FileMonitor1, &FileMonitor::OnFileExists, &FileMonitor1, &FileMonitor::OutputEventFileExists);
     QObject::connect(&FileMonitor1, &FileMonitor::OnFileLost, &FileMonitor1, &FileMonitor::OutputEventFileLost);
     try{
-    FileMonitor1.CheckStateOfFiles();
-    }catch (Exceptions *excp){
-        qDebug()<<(excp->what())<<"  Code: "<<excp->getCode();
-        delete excp;
-        return 0;
+        while(true){
+            FileMonitor1.CheckStateOfFiles();
+            Delayer1->wait();
+        }
+    }catch (CustomExceptions excp){
+        qDebug()<<(excp.what())<<"  Code: "<<excp.getCode();
+        delete Delayer1;
+        //delete excp;
+        return 1;
     }
 
     return 0;

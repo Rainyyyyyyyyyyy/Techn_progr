@@ -1,5 +1,5 @@
 #include "FileList.h"
-
+#include "FileListExceptions.hpp"
 
 
 // констрктор по пути к файлу со списком файлов для наблюдения

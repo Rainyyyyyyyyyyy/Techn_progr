@@ -9,38 +9,27 @@
 #define EXCEPTION_INDEX_OUT_OF_BOUNDS 102
 #define EXCEPTION_FILEPATH_TO_LIST_IS_EMPTY 103
 
+//std::exception *excpc = new std::exception;
 
 
 
 /* Исключение: невозможно открыть файл */
-class ExceptionUnableToOpenFile : public Exceptions {
+class ExceptionUnableToOpenFile : public CustomExceptions{//Exceptions {
 public:
-    ExceptionUnableToOpenFile() : Exceptions(EXCEPTION_UNABLE_TO_OPEN_FILE){}
-
-    const char * what() const noexcept override{
-        return "Unable to open file!";
-    }
+    ExceptionUnableToOpenFile() : CustomExceptions(EXCEPTION_UNABLE_TO_OPEN_FILE, "Unable to open file!"){}
 };
 
 
 /* Исключение: выход за пределы массива */
-class ExceptionIndexOutOfBounds : public Exceptions {
+class ExceptionIndexOutOfBounds : public CustomExceptions {
 public:
-    ExceptionIndexOutOfBounds() : Exceptions(EXCEPTION_INDEX_OUT_OF_BOUNDS){}
-
-    const char * what() const noexcept override{
-        return "Error: index out of bounds!";
-    }
+    ExceptionIndexOutOfBounds() : CustomExceptions(EXCEPTION_INDEX_OUT_OF_BOUNDS, "Error: index out of bounds!"){}
 };
 
 /* Исключение: путь к файлу-списку пуст */
-class ExceptionFilePathToListIsEmpty : public Exceptions {
+class ExceptionFilePathToListIsEmpty : public CustomExceptions {
 public:
-    ExceptionFilePathToListIsEmpty() : Exceptions(EXCEPTION_FILEPATH_TO_LIST_IS_EMPTY){}
-
-    const char * what() const noexcept override{
-        return "Error: Path to file-list is empty!";
-    }
+    ExceptionFilePathToListIsEmpty() : CustomExceptions(EXCEPTION_FILEPATH_TO_LIST_IS_EMPTY, "Error: Path to file-list is empty!"){}
 };
 
 
