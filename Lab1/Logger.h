@@ -6,10 +6,10 @@
 #include "ILogger.h"
 #include <QDebug>
 
-class Logger : public ILogger {
+class ConsoleLogger : public ILogger {
 public:
-    Logger() = default;
-    ~Logger() = default;
+    ConsoleLogger() = default;
+    ~ConsoleLogger() = default;
 
     // определение функции вывода - вывод на консоль QString data
     void Log(const QString &data);
