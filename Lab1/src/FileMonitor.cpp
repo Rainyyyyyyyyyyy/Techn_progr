@@ -48,31 +48,30 @@ void FileMonitor::refreshList(){
     QFile File_with_List(path_to_hostFile);
     if (File_with_List.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-
-        //consoleOutput = new ConsoleLogger;
-        //path_to_hostFile = path_to_filelist;
         QTextStream File_content(&File_with_List);
-        QList <QString> listOfPaths;    // получили из хост-файла только что
-        /* прочитали строки из файла */
+        QList <QString> listOfPaths;    // пути из хост-файла без повторов
+
         while(!File_content.atEnd()){
             QString temp_path = File_content.readLine();
-            if(!listOfPaths.contains(temp_path))
+            if(!temp_path.isEmpty() && !listOfPaths.contains(temp_path)){
             listOfPaths.append(temp_path);
-            //add_path(temp_path);
-            //List.push_back(temp_path);
+            }
         }
         File_with_List.close();
+        if(listOfPaths.empty()){
+            throw ExceptionFileListIsEmpty();
+        }
+        QList<QString> currentList = filesProperties.keys();
 
-        QList currentList = filesProperties.keys(); // имеется в списке-путей до обновления
-        for (auto local_path_new : listOfPaths){
-            bool flag_is_new = false;
-            for(auto local_path_prev : currentList){
-                if(local_path_prev == local_path_new){
-                    break;
-                }
+        for(QString &local_path_prev : currentList){
+            if(!listOfPaths.contains(local_path_prev)){
+                remove_path(local_path_prev);
             }
-            if(flag_is_new == true){
+        }
 
+        for(QString &local_path_new : listOfPaths){
+            if(!filesProperties.contains(local_path_new)){
+                add_path(local_path_new);
             }
         }
     }else{
@@ -121,6 +120,8 @@ void FileMonitor::CheckStateOfFiles(){
             temp_fileinfo.previous_state = temp_fileinfo.current_state;
             //newData[i].refresh();           // Обновление новых данных на след. итерацию
         }
+        // обновление списка наблюдаемых файлов
+        refreshList();
 }
         /*List->refreshList();
         N = /*List->getSize();
