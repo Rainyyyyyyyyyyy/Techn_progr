@@ -3,11 +3,15 @@
 // конструктор по пути к файлу-списку
 // в этом моменте старая и новая информация по файлах эквиваентны
 // (ввиду того, что создаются в одно и то же время - в момент появления в писке для наблюдения)
-FileMonitor::FileMonitor(QString & path_to_filelist){
+FileMonitor::FileMonitor(QString & path_to_filelist, ILogger * __logg){
     QFile File_with_List(path_to_filelist);
     if (File_with_List.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        consoleOutput = new ConsoleLogger;
+        if(__logg != nullptr)consoleOutput = __logg;
+        else {
+            File_with_List.close();
+            return;
+            }//new ConsoleLogger;
         path_to_hostFile = path_to_filelist;
         QTextStream File_content(&File_with_List);
         while(!File_content.atEnd()){
