@@ -1,9 +1,9 @@
-#include "Logger.h"
+#include "ConsoleLogger.h"
 
 
 
 // определение функции вывода - вывод на консоль QString data
-void Logger::Log(const QString &data){
+void ConsoleLogger::Log(const QString &data){
     // qDebug() << выводит в конце '\n' автоматически
     qDebug()<<"Log_data: "<<data<<Qt::flush;
 }

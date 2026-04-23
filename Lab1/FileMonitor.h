@@ -7,21 +7,12 @@
 #include <QObject>
 #include <QFileInfo>
 #include <QVector>
+#include <QMap>
 #include <QDebug>
 #include <QTextStream>
 
-#include "FileList.h"
-#include "Logger.h"
-#include "Delayer.h"
 
-#include "FileMonitorExceptions.h"
-
-
-template <class T> void Swap(T &a, T& b){
-    T c = a;
-    a = b;
-    b = c;
-}
+#include "ConsoleLogger.h"
 
 
 class FileMonitor : public QObject{
@@ -30,45 +21,22 @@ class FileMonitor : public QObject{
 
 public:
     explicit FileMonitor (QObject *parent = nullptr) : QObject(parent) {}
-    // конструктор по умолчанию
-    //FileMonitor(){}
 
-    // конструктор
-    FileMonitor(IFileList *__List = nullptr, ILogger *__Logger = nullptr, IDelayer *__Delayer = nullptr);
-
+    // конструктор по пути к файлу-списку
+    FileMonitor(QString & path_to_hostFile, ILogger * __logg);
     // деструктор
-    ~FileMonitor(){
-        if(List != NULL && List != nullptr)delete List;
-        if(ConsoleOutput != NULL && ConsoleOutput != nullptr)delete ConsoleOutput;
-        if(Delay != NULL && Delay != nullptr)delete Delay;
+    ~FileMonitor();
 
-        List = NULL;
-        ConsoleOutput = NULL;
-        Delay = NULL;
-    }
+    // проверить состояние файлов - сравнение старой и новой информации и логирование событий
+    void CheckStateOfFiles();
 
-    /*// конструктор по одной строке к одному файлу
-    FileMonitor(const QString &QStrPath);
+    // Установка пути к хост-файлу и сущности-вывода
+    void Init(QString & path_to_hostFile, ILogger * Logg);
 
-    // конструктор по вектору строк к файлам
-    FileMonitor(QVector <QString> &QStrPaths);
+    // геттеры
+    unsigned int getSize() const;
+    QList <QString> getList() const;
 
-
-
-    // конструктор по файлу с путями к файлам
-    // НЕДОДЕЛАНА
-    FileMonitor(const QFile &FileList);
-
-
-
-    // файл успешно добавлен под наблюдение - return true
-    // else return false
-    bool add_file(const QString &path);
-
-    // файл под наблюдение - успешно удаляем из-под наблюдения и return true;
-    // else return false
-    bool remove_file(const QString &path);
-*/
 
 signals:
     // изменение имени или удаление файла равноценно - изменить путь к файлу
@@ -83,16 +51,9 @@ signals:
     // размер файла изменился на newSize
     void OnFileChange(QString path, int oldSize, int newSize);
 
-    /*
-    // debug
-    void smth_changed(){
-        ConsoleOutput->Log("Debug output");
-    }
-*/
 
 public slots:
 
-    void CheckStateOfFiles();
 
 
 // файл существует
@@ -104,36 +65,29 @@ public slots:
 
 
 
-    /*{
-        QTextStream qout(stdout);        // для вывода
-        QTextStream qin(stdin);
-
-        QVector <QFileInfo> prev_files = Files;
-        unsigned int n = Files.size();
-        for(unsigned int i=0; i<n; i++){
-            Files[i].refresh();
-            if(Files[i].exists() != prev_files[i].exists()
-                ||  Files[i].size() != prev_files[i].size()){
-                //qDebug().noquote()<<Files[i].path()<<": Changed!\n";
-                qout<<Files[i].absolutePath()<<'/'<<Files[i].baseName()<<": Changed!\n"<<Qt::flush;
-            }
-        }
-    }*/
-
-
 private:
-    IFileList *List;                    // список наблюдаемых файлов
-    ILogger *ConsoleOutput;    // вывод
-    IDelayer *Delay;                // регулировка задержки
+
+    struct fileStates{
+        QFileInfo previous_state;     // информация старая
+        QFileInfo current_state;      // информация новая
+    };
+    // hostFile - Файл, в котором перечислены по-строчно абсолютные пути к файлам для наблюдения
+    QString pathToHostFile;
+    QMap<QString, fileStates> filesProperties;  // список наблюдаемых файлов
+    ILogger *consoleOutput;    // вывод
 
 
+    // проверить на наличие '.' и '..'
+    bool checkDotAndDotDot_path(QString path) const;
+    // проверить на предмет: файл скрыт
+    bool checkFileIsHidden_path(QString &path) const;
+    // добавить путь к файлу в fileProperties
+    bool add_path(QString &path);
+    // удалить путь к файлу из fileProperties
+    bool remove_path(QString &path);
+    // перепрочитать (актуализировать) с список путей к файлам с файла-списка
+    void refreshList();
 
 
-    //QVector <QFileInfo> Files;
-    // флаги на изменение (например заменили символ - размер непоменялся, но содержимое изменилось
-    //QVector <bool> Files_change_flags;
-    // Если создать файл, то QFileInfo сам сделает refresh() (почему-то)
-    // поэтому для отслеживания создания файла - флаги на изменение QFileInfo::exists()
-    //QVector <bool> Files_arrived_flags;
 
 };
