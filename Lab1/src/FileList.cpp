@@ -22,17 +22,7 @@ FileList::FileList(const QString &path_to_File_with_List){
     }
 }
 
-/*
-// конструктор по массиву путей
-FileList::FileList(const QVector <QString> &paths){
-    PathToList = "";
-    List.clear();
-    for(unsigned int i=0; i<paths.size(); i++){
-        add_path(paths[i]);
-    }
-    //List = paths;
-}
-*/
+
 // конструктор копирования
 FileList::FileList(const FileList &s){
     List = s.List;
