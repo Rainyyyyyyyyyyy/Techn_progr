@@ -1,25 +1,24 @@
 #ifndef DELAYER_H
 #define DELAYER_H
 
-#endif // DELAYER_H
 
 #include "IDelayer.h"
 #include <QThread>
+
+
 class Delayer : public IDelayer{
 private:
+    // количество секунд для задержки в wait()
     unsigned int seconds;
 public:
     // конструктор по значению
-    Delayer(unsigned int s) {
-        if(s < 1)s = 1;
-        seconds = s;
-    }
+    Delayer(unsigned int s);
     // конструктор по умолчанию
-    Delayer(){ seconds = 1; }
+    Delayer();
     // деструктор
-    ~Delayer(){}
-
-    void wait(){
-        QThread::sleep(seconds);
-    }
+    ~Delayer();
+    // функция задержки
+    void wait();
 };
+
+#endif // DELAYER_H
