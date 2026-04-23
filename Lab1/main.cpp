@@ -100,8 +100,9 @@ int main(int argc, char *argv[])
         //delete excp;
         return 1;
     }
+    ILogger *__logger = new ConsoleLogger;
     //FileMonitor FileMonitor1(FileList1, Logger1, Delayer1);
-    FileMonitor FileMonitor1(path);
+    FileMonitor FileMonitor1(path, __logger);
         //QObject::connect(&boss, &Employee::salaryChanged, PrintInfoSalaryA);
     //QObject::connect(&FileMonitor1, &FileMonitor::CheckStateOfFiles, )
 

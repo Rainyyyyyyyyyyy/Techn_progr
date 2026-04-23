@@ -32,7 +32,7 @@ public:
     explicit FileMonitor (QObject *parent = nullptr) : QObject(parent) {}
 
     // конструктор по пути к файлу-списку
-    FileMonitor(QString & path_to_filelist);
+    FileMonitor(QString & path_to_filelist, ILogger * __logg);
     // деструктор
     ~FileMonitor(){
         ///if(List != NULL && List != nullptr)delete List;
@@ -44,8 +44,7 @@ public:
         ///Delay = NULL;
     }
 
-    // перепрочитать (актуализировать) с список путей к файлам с файла-списка
-    void refreshList();
+
 
     // геттер
     unsigned int getSize() const;
@@ -99,6 +98,9 @@ private:
     bool add_path(QString &path);
     // удалить путь к файлу из fileProperties
     bool remove_path(QString &path);
+
+    // перепрочитать (актуализировать) с список путей к файлам с файла-списка
+    void refreshList();
 
 
 
