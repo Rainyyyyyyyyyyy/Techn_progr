@@ -11,7 +11,12 @@
 
 Для обработки событий изменения состояния используется механизм сигналов и слотов Qt.
 
+## UML
 ![UML](Lab1/UML/UML_.png)
+
+
+## Signals-slots
+![Signals-slots UML](Lab1/UML/Sisgnals_slots_uml.png)
 
 
 ## Как это работает
