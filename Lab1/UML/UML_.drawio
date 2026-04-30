@@ -1,0 +1,162 @@
+<mxfile host="app.diagrams.net">
+  <diagram name="Страница-1" id="60HMbKLtAYuUdjvhp7-i">
+    <mxGraphModel dx="403" dy="511" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="X88csitm1GCbTus264jZ-2" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;IDelayer&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style: solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ virtual &lt;i&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;~IDelayer&lt;/font&gt;()&lt;/i&gt;&lt;br&gt;+ virtual &lt;i&gt;wait()&lt;/i&gt;: void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="120" width="200" x="120" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="X88csitm1GCbTus264jZ-4" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;ILogger&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style: solid;&quot;&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin: 0px 0px 0px 4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ virtual &lt;i&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;~ILogger&lt;/font&gt;()&lt;/i&gt;&lt;br&gt;+ virtual &lt;i&gt;Log&lt;/i&gt;(const QString &amp;amp;): void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="120" width="240" x="400" y="560" as="geometry" />
+        </mxCell>
+        <mxCell id="pmsVQuJVVwqS_7ATKWxI-3" edge="1" parent="1" source="X88csitm1GCbTus264jZ-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;startArrow=block;startFill=0;" target="pmsVQuJVVwqS_7ATKWxI-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="pmsVQuJVVwqS_7ATKWxI-10" edge="1" parent="1" source="X88csitm1GCbTus264jZ-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;endArrow=none;endFill=0;startArrow=block;startFill=0;" target="pmsVQuJVVwqS_7ATKWxI-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-3" edge="1" parent="1" source="X88csitm1GCbTus264jZ-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;endArrow=block;endFill=0;" target="30N4tTfdrNdOhSgg4rxy-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-9" edge="1" parent="1" source="X88csitm1GCbTus264jZ-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;startArrow=block;startFill=0;endArrow=none;endFill=0;" target="30N4tTfdrNdOhSgg4rxy-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="X88csitm1GCbTus264jZ-5" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;i&gt;&amp;lt;&amp;lt;Interface&amp;gt;&amp;gt;&lt;/i&gt;&lt;br&gt;&lt;b&gt;CustomExceptions :: public std::exception&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# errorCode: unsigned int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;# message : std::string&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&amp;nbsp;+ &lt;i&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;Exceptions&lt;/font&gt;()&lt;/i&gt;&lt;br&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ &lt;/span&gt;&lt;i style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;what()&amp;nbsp;&lt;/i&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;const &lt;/span&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;: const char *&lt;/span&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;Exceptions&lt;/font&gt;(int)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ getCode()const : unsigned int&lt;/p&gt;" vertex="1">
+          <mxGeometry height="160" width="280" x="760" y="720" as="geometry" />
+        </mxCell>
+        <mxCell id="X88csitm1GCbTus264jZ-7" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Delayer :: public IDelayer&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- seconds: unsigned int&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;Delayer&lt;/font&gt;(unsigned int)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;Delayer&lt;/font&gt;()&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;~Delayer&lt;/font&gt;()&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ wait(): void&amp;nbsp;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="120" width="200" x="120" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="X88csitm1GCbTus264jZ-9" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;Logger&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;Logger&lt;/font&gt;()&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;~Logger&lt;/font&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;()&lt;/font&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255));&quot;&gt;+ Log(const QString &amp;amp;): void&lt;/font&gt;&lt;/p&gt;" vertex="1">
+          <mxGeometry height="120" width="240" x="400" y="800" as="geometry" />
+        </mxCell>
+        <mxCell id="pmsVQuJVVwqS_7ATKWxI-6" edge="1" parent="1" source="X88csitm1GCbTus264jZ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;" target="pmsVQuJVVwqS_7ATKWxI-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-19" connectable="0" parent="pmsVQuJVVwqS_7ATKWxI-6" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="uses" vertex="1">
+          <mxGeometry relative="1" x="0.8408" y="-2" as="geometry">
+            <mxPoint x="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pmsVQuJVVwqS_7ATKWxI-9" edge="1" parent="1" source="X88csitm1GCbTus264jZ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;" target="pmsVQuJVVwqS_7ATKWxI-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-20" connectable="0" parent="pmsVQuJVVwqS_7ATKWxI-9" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="uses" vertex="1">
+          <mxGeometry relative="1" x="0.9024" as="geometry">
+            <mxPoint x="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-14" edge="1" parent="1" source="X88csitm1GCbTus264jZ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;" target="30N4tTfdrNdOhSgg4rxy-4">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1720" y="1140" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-21" connectable="0" parent="30N4tTfdrNdOhSgg4rxy-14" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="uses" vertex="1">
+          <mxGeometry relative="1" x="0.9272" y="-2" as="geometry">
+            <mxPoint x="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-15" edge="1" parent="1" source="X88csitm1GCbTus264jZ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;" target="30N4tTfdrNdOhSgg4rxy-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-22" connectable="0" parent="30N4tTfdrNdOhSgg4rxy-15" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="uses" vertex="1">
+          <mxGeometry relative="1" x="0.942" as="geometry">
+            <mxPoint x="20" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-16" edge="1" parent="1" source="X88csitm1GCbTus264jZ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;dashed=1;" target="30N4tTfdrNdOhSgg4rxy-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-23" connectable="0" parent="30N4tTfdrNdOhSgg4rxy-16" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="uses" vertex="1">
+          <mxGeometry relative="1" x="0.9491" y="-2" as="geometry">
+            <mxPoint x="18" y="-2" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-17" edge="1" parent="1" source="X88csitm1GCbTus264jZ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;" target="30N4tTfdrNdOhSgg4rxy-7">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-24" connectable="0" parent="30N4tTfdrNdOhSgg4rxy-17" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="uses" vertex="1">
+          <mxGeometry relative="1" x="0.9572" y="-2" as="geometry">
+            <mxPoint x="18" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-18" edge="1" parent="1" source="X88csitm1GCbTus264jZ-11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;dashed=1;" target="30N4tTfdrNdOhSgg4rxy-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-25" connectable="0" parent="30N4tTfdrNdOhSgg4rxy-18" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" value="uses" vertex="1">
+          <mxGeometry relative="1" x="0.9673" y="-3" as="geometry">
+            <mxPoint x="17" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="X88csitm1GCbTus264jZ-11" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;FileMonitor :: public QObject&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;-&amp;nbsp;filesProperties : QMap &amp;lt;QString,&amp;nbsp; fileStates &amp;gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- consoleOutput: ILogger *&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;-&amp;nbsp;pathToHostFile: QString&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- add_path(QString) : bool&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- remove_path(QString) : bool&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- refreshList() : void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- checkDotAndDotDot_path(QString) : bool&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;- checkFilesIsHidden_path(QString) : bool&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;FileMonitor&lt;/font&gt;(QObject *)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;FileMonitor&lt;/font&gt;(QString &amp;amp;)&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;~FileMonitor&lt;/font&gt;()&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(153, 255, 153));&quot;&gt;OnFileExists&lt;/font&gt;(QString, int): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(153, 255, 153));&quot;&gt;OnFileLost&lt;/font&gt;(QString): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(153, 255, 153));&quot;&gt;OnFileChange&lt;/font&gt;(QString, int): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ CheckStateOfFile(): void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(153, 204, 255));&quot;&gt;OutputEventFileExists&lt;/font&gt;(const QString &amp;amp;, const int &amp;amp;) const: int&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(153, 204, 255));&quot;&gt;OutputEventFileLost&lt;/font&gt;(const QString &amp;amp;) const : void&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(153, 204, 255));&quot;&gt;OutputEventFileChanged&lt;/font&gt;(const QString &amp;amp;, const int &amp;amp;, const int &amp;amp;) const : void&lt;/p&gt;" vertex="1">
+          <mxGeometry height="320" width="440" x="340" y="1000" as="geometry" />
+        </mxCell>
+        <mxCell id="XdChegb_MeqTolEv4o5T-1" parent="1" style="text;align=center;fontStyle=1;verticalAlign=middle;spacingLeft=3;spacingRight=3;strokeColor=none;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;html=1;" value="&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(153, 255, 153));&quot;&gt;signals&lt;/font&gt;&lt;div&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(153, 204, 255));&quot;&gt;slots&lt;/font&gt;&lt;/div&gt;&lt;div&gt;&lt;font style=&quot;color: light-dark(rgb(0, 0, 0), rgb(255, 255, 204));&quot;&gt;constructor\destructor&lt;/font&gt;&lt;/div&gt;" vertex="1">
+          <mxGeometry height="50" width="140" x="120" y="470" as="geometry" />
+        </mxCell>
+        <mxCell id="XdChegb_MeqTolEv4o5T-2" edge="1" parent="1" source="X88csitm1GCbTus264jZ-7" style="endArrow=block;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;dashed=1;" target="X88csitm1GCbTus264jZ-2" value="">
+          <mxGeometry relative="1" width="160" as="geometry">
+            <mxPoint x="70" y="720" as="sourcePoint" />
+            <mxPoint x="230" y="720" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XdChegb_MeqTolEv4o5T-4" edge="1" parent="1" source="X88csitm1GCbTus264jZ-9" style="endArrow=block;endFill=0;endSize=12;html=1;rounded=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;dashed=1;" target="X88csitm1GCbTus264jZ-4" value="">
+          <mxGeometry relative="1" width="160" as="geometry">
+            <mxPoint x="810" y="1000" as="sourcePoint" />
+            <mxPoint x="810" y="880" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="XdChegb_MeqTolEv4o5T-7" edge="1" parent="1" source="X88csitm1GCbTus264jZ-11" style="endArrow=open;endFill=1;endSize=12;html=1;rounded=0;exitX=0.75;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;edgeStyle=orthogonalEdgeStyle;" target="X88csitm1GCbTus264jZ-4" value="">
+          <mxGeometry relative="1" width="160" as="geometry">
+            <Array as="points">
+              <mxPoint x="670" y="620" />
+            </Array>
+            <mxPoint x="850" y="1070" as="sourcePoint" />
+            <mxPoint x="850" y="910" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pmsVQuJVVwqS_7ATKWxI-1" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ExceptionFileListIsEmpty&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;ExceptionFileListIsEmpty()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="240" x="1040" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="pmsVQuJVVwqS_7ATKWxI-8" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ExceptionFilePathToListIsEmpty&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;ExceptionFilePathToListIsEmpty()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="240" x="1320" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-1" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&amp;lt;&amp;lt;interface std::exception&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+ &lt;i&gt;what()&lt;/i&gt; : const char*&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="240" x="780" y="590" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-4" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ExceptionUnableToOpenFile&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;ExceptionUnableToOpenFile()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="240" x="1600" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-10" edge="1" parent="1" source="30N4tTfdrNdOhSgg4rxy-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=0;" target="X88csitm1GCbTus264jZ-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-5" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ExceptionDotOrDotDotInHostPath&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;ExceptionDotOrDotDotInHostPath()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="240" x="1880" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-11" edge="1" parent="1" source="30N4tTfdrNdOhSgg4rxy-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=0;" target="X88csitm1GCbTus264jZ-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-6" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ExceptionDotOrDotDotInListToCheck&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;ExceptionDotOrDotDotInListToCheck()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="240" x="2160" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-12" edge="1" parent="1" source="30N4tTfdrNdOhSgg4rxy-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=0;" target="X88csitm1GCbTus264jZ-5">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1190" y="690" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-7" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ExceptionFileIsHidden&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;ExceptionFileIsHidden()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="240" x="2440" y="920" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-13" edge="1" parent="1" source="30N4tTfdrNdOhSgg4rxy-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;endArrow=block;endFill=0;" target="X88csitm1GCbTus264jZ-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="30N4tTfdrNdOhSgg4rxy-8" parent="1" style="verticalAlign=top;align=left;overflow=fill;html=1;whiteSpace=wrap;" value="&lt;p style=&quot;margin:0px;margin-top:4px;text-align:center;&quot;&gt;&lt;b&gt;ExceptionDotOrDotDotInPath&lt;/b&gt;&lt;/p&gt;&lt;hr size=&quot;1&quot; style=&quot;border-style:solid;&quot;&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;&lt;/p&gt;&lt;p style=&quot;margin:0px;margin-left:4px;&quot;&gt;+&amp;nbsp;ExceptionDotOrDotDotInPath()&lt;/p&gt;" vertex="1">
+          <mxGeometry height="60" width="240" x="2720" y="920" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
