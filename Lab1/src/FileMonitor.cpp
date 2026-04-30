@@ -8,6 +8,8 @@ FileMonitor::FileMonitor(QString & path_to_hostFile, ILogger * __logg){
     if(checkDotAndDotDot_path(path_to_hostFile)){
         throw ExceptionDotOrDotDotInHostPath();
     }
+
+
     QFile File_with_List(path_to_hostFile);
     if (File_with_List.open(QIODevice::ReadOnly | QIODevice::Text))
     {
@@ -25,7 +27,12 @@ FileMonitor::FileMonitor(QString & path_to_hostFile, ILogger * __logg){
     }else{
         throw new ExceptionUnableToOpenFile; // EXCEPTION_UNABLE_TO_OPEN_FILE;
     }
+    //QObject::connect(this, &FileMonitor::signalFileChange, consoleOutput, &ILogger::Log);    //ConsoleLogger::OutputEventFileChanged);
+    //QObject::connect(this, &FileMonitor::signalFileExists,   consoleOutput, &ILogger::Log);    //&ConsoleLogger::OutputEventFileExists);
+    //QObject::connect(this, &FileMonitor::signalFileLost,     consoleOutput, &ILogger::Log);    //&ConsoleLogger::OutputEventFileLost);
+
 }
+
 
 // деструктор
 FileMonitor::~FileMonitor(){
@@ -169,6 +176,10 @@ void FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
     }else{
         throw ExceptionUnableToOpenFile();
     }
+    QObject::connect(this, &FileMonitor::signalFileChange, consoleOutput, &ILogger::Log);    //ConsoleLogger::OutputEventFileChanged);
+    QObject::connect(this, &FileMonitor::signalFileExists,   consoleOutput, &ILogger::Log);    //&ConsoleLogger::OutputEventFileExists);
+    QObject::connect(this, &FileMonitor::signalFileLost,     consoleOutput, &ILogger::Log);    //&ConsoleLogger::OutputEventFileLost);
+
 }
 
 
@@ -181,16 +192,24 @@ void FileMonitor::CheckStateOfFiles(){
             if(temp_fileinfo.current_state.isHidden()){
                 throw ExceptionFileIsHidden();
             }
+            // message = path + " --- File is exists. Size: " + QString::number(currentSize) + " bytes."
             if(!temp_fileinfo.current_state.exists()){
                 // Файл не найден
-                emit OnFileLost(temp_fileinfo.current_state.filePath());
+                emit signalFileLost(temp_fileinfo.current_state.filePath() + " --- File has been deleted, replaced or renamed.");//(temp_fileinfo.current_state.filePath());
             }else{
                 if((temp_fileinfo.current_state.size()) != (temp_fileinfo.previous_state.size())){
                     // Размер файла изменился
-                    emit OnFileChange(temp_fileinfo.current_state.filePath(), temp_fileinfo.previous_state.size(), temp_fileinfo.current_state.size());
+                //QString msg = temp_fileinfo.current_state.filePath() +
+                //              " --- File is exists. Size: " + QString::number(temp_fileinfo.current_state.size()) + " bytes.";
+                    emit signalFileChange(temp_fileinfo.current_state.absoluteFilePath() +
+                                                                " --- Size has been changed. Size:  " +
+                                        QString::number(temp_fileinfo.previous_state.size()) +
+                                                    " -> " + QString::number(temp_fileinfo.current_state.size()) + " bytes.");
+//temp_fileinfo.current_state.filePath(), temp_fileinfo.previous_state.size(), temp_fileinfo.current_state.size());
                 }else{
                      // Файл существует
-                    emit OnFileExists(temp_fileinfo.current_state.filePath(), temp_fileinfo.current_state.size());
+                    emit signalFileExists(temp_fileinfo.current_state.filePath() +
+                              " --- File is exists. Size: " + QString::number(temp_fileinfo.current_state.size()) + " bytes.");//(temp_fileinfo.current_state.filePath(), temp_fileinfo.current_state.size());
                 }
             }
             // Обновление старых данных под новые
@@ -200,7 +219,7 @@ void FileMonitor::CheckStateOfFiles(){
         refreshList();
 }
 
-
+/*
 // файл существует
 void FileMonitor::OutputEventFileExists(const QString &path, const int &currentSize) const{
     consoleOutput->Log(path + " --- File is exists. Size: " + QString::number(currentSize) + " bytes.");
@@ -217,4 +236,4 @@ void FileMonitor::OutputEventFileChanged(const QString &path, const int &oldSize
 }
 
 
-
+*/

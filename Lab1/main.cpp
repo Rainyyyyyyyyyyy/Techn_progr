@@ -56,24 +56,30 @@ int main(int argc, char *argv[])
     ILogger *__logger = new ConsoleLogger;
 
     FileMonitor FileMonitor1;
+
+
+    //QObject::connect(&FileMonitor1, &FileMonitor::OnFileChange, &FileMonitor1, &FileMonitor::OutputEventFileChanged);
+    //QObject::connect(&FileMonitor1, &FileMonitor::OnFileExists,   &FileMonitor1, &FileMonitor::OutputEventFileExists);
+    //QObject::connect(&FileMonitor1, &FileMonitor::OnFileLost,     &FileMonitor1, &FileMonitor::OutputEventFileLost);
+
+
+
     try{
         FileMonitor1.Init(path, __logger);
-    }catch (CustomExceptions excp){
+    }catch (CustomExceptions &excp){
         qDebug()<<(excp.what())<<"  Code: "<<excp.getCode();
         delete Delayer1;
         delete __logger;
         return 1;
     }
 
-    QObject::connect(&FileMonitor1, &FileMonitor::OnFileChange, &FileMonitor1, &FileMonitor::OutputEventFileChanged);
-    QObject::connect(&FileMonitor1, &FileMonitor::OnFileExists,   &FileMonitor1, &FileMonitor::OutputEventFileExists);
-    QObject::connect(&FileMonitor1, &FileMonitor::OnFileLost,     &FileMonitor1, &FileMonitor::OutputEventFileLost);
+
     try{
         while(true){
             FileMonitor1.CheckStateOfFiles();
             Delayer1->wait();
         }
-    }catch (CustomExceptions excp){
+    }catch (CustomExceptions &excp){
         qDebug()<<(excp.what())<<"  Code: "<<excp.getCode();
         delete Delayer1;
         delete __logger;

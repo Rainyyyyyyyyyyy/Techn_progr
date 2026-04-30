@@ -5,15 +5,22 @@
 
 
 #include <QString>
+#include <QObject>
 
-class ILogger
+#include <QDebug>
+
+class ILogger : public QObject
 {
+       Q_OBJECT
+
 public:
 
-    virtual ~ILogger() = default;
+       virtual ~ILogger() {}
 
     // функция вывода
-    virtual void Log(const QString &data) = 0;
+   public slots:
+       virtual void Log(QString) = 0;
+
 };
 
 

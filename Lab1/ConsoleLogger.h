@@ -6,13 +6,32 @@
 #include <QDebug>
 
 
-class ConsoleLogger : public ILogger {
-public:
-    ConsoleLogger() = default;
-    ~ConsoleLogger() = default;
+class ConsoleLogger : public ILogger{
+private:
 
-    // переопределение функции вывода - вывод на консоль QString data
-    void Log(const QString &data);
+
+
+public:
+
+    ConsoleLogger() {};
+    ~ConsoleLogger() {};
+
+
+
+    // переопределение log от базового класса
+
+    void Log(QString s) override;
+public:
+    // [слот] файл существует
+    void OutputEventFileExists(const QString &path, const int &currentSize);
+
+    // [слот] файл удалён, перемещён или переименован
+    void OutputEventFileLost(const QString &path);
+
+    // [слот] размер файла изменился на newSize
+    void OutputEventFileChanged(const QString &path, const int &oldSize, const int &newSize);
+
+
 
 };
 
