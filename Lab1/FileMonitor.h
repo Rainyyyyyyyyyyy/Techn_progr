@@ -52,19 +52,6 @@ signals:
     void signalFileChange(QString msg_log);//(QString path, int oldSize, int newSize);
 
 
-public slots:
-
-
-/*
-// файл существует
-    void OutputEventFileExists(QString);//(const QString &path, const int &currentSize) const;
-// файл удалён, перемещён или переименован
-    void OutputEventFileLost(QString);//(const QString &path) const;
-// размер файла изменился на newSize
-    void OutputEventFileChanged(QString);//(const QString &path, const int &oldSize, const int &newSize) const;
-
-*/
-
 private:
 
     struct fileStates{

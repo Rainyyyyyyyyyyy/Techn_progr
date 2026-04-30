@@ -18,7 +18,7 @@ public:
        virtual ~ILogger() {}
 
     // функция вывода
-   public slots:
+public slots:
        virtual void Log(QString) = 0;
 
 };

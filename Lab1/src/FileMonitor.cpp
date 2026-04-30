@@ -27,10 +27,6 @@ FileMonitor::FileMonitor(QString & path_to_hostFile, ILogger * __logg){
     }else{
         throw new ExceptionUnableToOpenFile; // EXCEPTION_UNABLE_TO_OPEN_FILE;
     }
-    //QObject::connect(this, &FileMonitor::signalFileChange, consoleOutput, &ILogger::Log);    //ConsoleLogger::OutputEventFileChanged);
-    //QObject::connect(this, &FileMonitor::signalFileExists,   consoleOutput, &ILogger::Log);    //&ConsoleLogger::OutputEventFileExists);
-    //QObject::connect(this, &FileMonitor::signalFileLost,     consoleOutput, &ILogger::Log);    //&ConsoleLogger::OutputEventFileLost);
-
 }
 
 
@@ -44,13 +40,7 @@ FileMonitor::~FileMonitor(){
 // returns 1 - added successfully
 // returns 0 - path is already exists in fileProperties and has not been added
 bool FileMonitor::add_path(QString &path){
-    /*QString checkerPath = path;
-    QFileInfo chekerPath_fileInfo(checkerPath);
-    checkerPath.chop(chekerPath_fileInfo.fileName().size());
-    if(checkerPath.contains("..") || checkerPath.contains(".")){
-        throw ExceptionDotOrDotDotInListToCheck();
-    }
-*/
+
     if(checkDotAndDotDot_path(path)){
         throw ExceptionDotOrDotDotInListToCheck();
     }
@@ -192,24 +182,23 @@ void FileMonitor::CheckStateOfFiles(){
             if(temp_fileinfo.current_state.isHidden()){
                 throw ExceptionFileIsHidden();
             }
-            // message = path + " --- File is exists. Size: " + QString::number(currentSize) + " bytes."
             if(!temp_fileinfo.current_state.exists()){
                 // Файл не найден
-                emit signalFileLost(temp_fileinfo.current_state.filePath() + " --- File has been deleted, replaced or renamed.");//(temp_fileinfo.current_state.filePath());
+                emit signalFileLost(temp_fileinfo.current_state.filePath() +
+                                                        " --- File has been deleted, replaced or renamed.");
             }else{
                 if((temp_fileinfo.current_state.size()) != (temp_fileinfo.previous_state.size())){
                     // Размер файла изменился
-                //QString msg = temp_fileinfo.current_state.filePath() +
-                //              " --- File is exists. Size: " + QString::number(temp_fileinfo.current_state.size()) + " bytes.";
                     emit signalFileChange(temp_fileinfo.current_state.absoluteFilePath() +
                                                                 " --- Size has been changed. Size:  " +
-                                        QString::number(temp_fileinfo.previous_state.size()) +
-                                                    " -> " + QString::number(temp_fileinfo.current_state.size()) + " bytes.");
-//temp_fileinfo.current_state.filePath(), temp_fileinfo.previous_state.size(), temp_fileinfo.current_state.size());
+                                                                QString::number(temp_fileinfo.previous_state.size()) +
+                                                                " -> " + QString::number(temp_fileinfo.current_state.size()) + " bytes.");
                 }else{
                      // Файл существует
                     emit signalFileExists(temp_fileinfo.current_state.filePath() +
-                              " --- File is exists. Size: " + QString::number(temp_fileinfo.current_state.size()) + " bytes.");//(temp_fileinfo.current_state.filePath(), temp_fileinfo.current_state.size());
+                                                            " --- File is exists. Size: " +
+                                                            QString::number(temp_fileinfo.current_state.size()) +
+                                                            " bytes.");
                 }
             }
             // Обновление старых данных под новые

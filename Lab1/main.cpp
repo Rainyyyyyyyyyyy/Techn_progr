@@ -57,13 +57,6 @@ int main(int argc, char *argv[])
 
     FileMonitor FileMonitor1;
 
-
-    //QObject::connect(&FileMonitor1, &FileMonitor::OnFileChange, &FileMonitor1, &FileMonitor::OutputEventFileChanged);
-    //QObject::connect(&FileMonitor1, &FileMonitor::OnFileExists,   &FileMonitor1, &FileMonitor::OutputEventFileExists);
-    //QObject::connect(&FileMonitor1, &FileMonitor::OnFileLost,     &FileMonitor1, &FileMonitor::OutputEventFileLost);
-
-
-
     try{
         FileMonitor1.Init(path, __logger);
     }catch (CustomExceptions &excp){
