@@ -23,7 +23,7 @@ public:
     explicit FileMonitor (QObject *parent = nullptr) : QObject(parent) {}
 
     // конструктор по пути к файлу-списку
-    FileMonitor(QString & path_to_hostFile, ILogger * __logg);
+    FileMonitor(QString & path_to_hostFile);//, ILogger * __logg);
     // деструктор
     ~FileMonitor();
 
@@ -61,7 +61,7 @@ private:
     // hostFile - Файл, в котором перечислены по-строчно абсолютные пути к файлам для наблюдения
     QString pathToHostFile;
     QMap<QString, fileStates> filesProperties;  // список наблюдаемых файлов
-    ILogger *consoleOutput;    // вывод
+    //ILogger *consoleOutput;    // вывод
 
 
     // проверить на наличие '.' и '..'
