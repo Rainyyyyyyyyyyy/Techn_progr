@@ -31,7 +31,7 @@ public:
     void CheckStateOfFiles();
 
     // Установка пути к хост-файлу и сущности-вывода
-    void Init(QString & path_to_hostFile, ILogger * Logg);
+    bool Init(QString & path_to_hostFile, ILogger * Logg);
 
     // геттеры
     unsigned int getSize() const;

@@ -32,7 +32,7 @@ FileMonitor::FileMonitor(QString & path_to_hostFile, ILogger * __logg){
 
 // деструктор
 FileMonitor::~FileMonitor(){
-    if(consoleOutput != NULL && consoleOutput != nullptr)delete consoleOutput;
+    //if(consoleOutput != NULL && consoleOutput != nullptr)delete consoleOutput;
     consoleOutput = NULL;
 }
 
@@ -135,7 +135,9 @@ unsigned int FileMonitor::getSize() const{
 }
 
 // Установка пути к хост-файлу и сущности-вывода
-void FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
+// если ILogger * ==nullptr или путь к хост-файлу некорректный или не изменился,
+// то инициализация не происходит, а исключение не выбрасывается и не отсоединяются старые сигналы
+bool FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
     if(checkDotAndDotDot_path(path_to_hostFile)){
         throw ExceptionDotOrDotDotInHostPath();
     }
@@ -147,13 +149,13 @@ void FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
         if(Logg != nullptr)consoleOutput = Logg;
         else {
             File_with_List.close();
-            return;
+            return false;
         }
         /* Проверка пути к хост-файлу */
         if(pathToHostFile != path_to_hostFile)pathToHostFile = path_to_hostFile;
         else{
             File_with_List.close();
-            return;
+            return false;
         }
         // очистка информации о прошлом списке
         filesProperties.clear();
@@ -165,7 +167,11 @@ void FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
         }
     }else{
         throw ExceptionUnableToOpenFile();
+        return false;
     }
+    // если корректно инициализировались, то отключаем старые сигналы, подключаем новые
+    // (во избежание дублирования)
+    QObject::disconnect(this, nullptr, nullptr, nullptr);
     QObject::connect(this, &FileMonitor::signalFileChange, consoleOutput, &ILogger::Log);    //ConsoleLogger::OutputEventFileChanged);
     QObject::connect(this, &FileMonitor::signalFileExists,   consoleOutput, &ILogger::Log);    //&ConsoleLogger::OutputEventFileExists);
     QObject::connect(this, &FileMonitor::signalFileLost,     consoleOutput, &ILogger::Log);    //&ConsoleLogger::OutputEventFileLost);
