@@ -1,13 +1,15 @@
 #include "ConsoleLogger.h"
 
+#include <QDebug>
+
+// переопределение Log() от базового класса
+void ConsoleLogger::Log(QString s) {
+    qDebug()<<s;
+}
+
 
 
 // определение функции вывода - вывод на консоль QString data
-void ConsoleLogger::Log(const QString &data){
-    // qDebug() << выводит в конце '\n' автоматически
-    qDebug()<<"Log_data: "<<data<<Qt::flush;
-}
-
 /*
 // Тестирование
 на вход: "message" - выход: вывод на консоль "message\n"

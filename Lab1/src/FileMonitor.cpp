@@ -4,18 +4,20 @@
 // конструктор по пути к файлу-списку
 // в этом моменте старая и новая информация по файлах эквиваентны
 // (ввиду того, что создаются в одно и то же время - в момент появления в писке для наблюдения)
-FileMonitor::FileMonitor(QString & path_to_hostFile, ILogger * __logg){
+FileMonitor::FileMonitor(QString & path_to_hostFile){//, ILogger * __logg){
     if(checkDotAndDotDot_path(path_to_hostFile)){
         throw ExceptionDotOrDotDotInHostPath();
     }
+
+
     QFile File_with_List(path_to_hostFile);
     if (File_with_List.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        if(__logg != nullptr)consoleOutput = __logg;
-        else {
-            File_with_List.close();
-            return;
-            }
+        //if(__logg != nullptr)consoleOutput = __logg;
+        //else {
+        //    File_with_List.close();
+        //    return;
+        //    }
         pathToHostFile = path_to_hostFile;
         QTextStream File_content(&File_with_List);
         while(!File_content.atEnd()){
@@ -27,23 +29,18 @@ FileMonitor::FileMonitor(QString & path_to_hostFile, ILogger * __logg){
     }
 }
 
+
 // деструктор
 FileMonitor::~FileMonitor(){
-    if(consoleOutput != NULL && consoleOutput != nullptr)delete consoleOutput;
-    consoleOutput = NULL;
+    //if(consoleOutput != NULL && consoleOutput != nullptr)delete consoleOutput;
+    //consoleOutput = NULL;
 }
 
 // добавить путь к файлу в fileProperties
 // returns 1 - added successfully
 // returns 0 - path is already exists in fileProperties and has not been added
 bool FileMonitor::add_path(QString &path){
-    /*QString checkerPath = path;
-    QFileInfo chekerPath_fileInfo(checkerPath);
-    checkerPath.chop(chekerPath_fileInfo.fileName().size());
-    if(checkerPath.contains("..") || checkerPath.contains(".")){
-        throw ExceptionDotOrDotDotInListToCheck();
-    }
-*/
+
     if(checkDotAndDotDot_path(path)){
         throw ExceptionDotOrDotDotInListToCheck();
     }
@@ -138,7 +135,9 @@ unsigned int FileMonitor::getSize() const{
 }
 
 // Установка пути к хост-файлу и сущности-вывода
-void FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
+// если ILogger * ==nullptr или путь к хост-файлу некорректный или не изменился,
+// то инициализация не происходит, а исключение не выбрасывается и не отсоединяются старые сигналы
+bool FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
     if(checkDotAndDotDot_path(path_to_hostFile)){
         throw ExceptionDotOrDotDotInHostPath();
     }
@@ -147,16 +146,15 @@ void FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
     if (File_with_List.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         /* проверка указателя *Logg */
-        if(Logg != nullptr)consoleOutput = Logg;
-        else {
+        if(Logg == nullptr){//consoleOutput = Logg;
             File_with_List.close();
-            return;
+            return false;
         }
         /* Проверка пути к хост-файлу */
         if(pathToHostFile != path_to_hostFile)pathToHostFile = path_to_hostFile;
         else{
             File_with_List.close();
-            return;
+            return false;
         }
         // очистка информации о прошлом списке
         filesProperties.clear();
@@ -168,7 +166,15 @@ void FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
         }
     }else{
         throw ExceptionUnableToOpenFile();
+        return false;
     }
+    // если корректно инициализировались, то отключаем старые сигналы, подключаем новые
+    // (во избежание дублирования)
+    QObject::disconnect(this, nullptr, nullptr, nullptr);
+    QObject::connect(this, &FileMonitor::signalFileChange, Logg, &ILogger::Log);    //ConsoleLogger::OutputEventFileChanged);
+    QObject::connect(this, &FileMonitor::signalFileExists,   Logg, &ILogger::Log);    //&ConsoleLogger::OutputEventFileExists);
+    QObject::connect(this, &FileMonitor::signalFileLost,     Logg, &ILogger::Log);    //&ConsoleLogger::OutputEventFileLost);
+
 }
 
 
@@ -183,14 +189,21 @@ void FileMonitor::CheckStateOfFiles(){
             }
             if(!temp_fileinfo.current_state.exists()){
                 // Файл не найден
-                emit OnFileLost(temp_fileinfo.current_state.filePath());
+                emit signalFileLost(temp_fileinfo.current_state.filePath() +
+                                                        " --- File has been deleted, replaced or renamed.");
             }else{
                 if((temp_fileinfo.current_state.size()) != (temp_fileinfo.previous_state.size())){
                     // Размер файла изменился
-                    emit OnFileChange(temp_fileinfo.current_state.filePath(), temp_fileinfo.previous_state.size(), temp_fileinfo.current_state.size());
+                    emit signalFileChange(temp_fileinfo.current_state.absoluteFilePath() +
+                                                                " --- Size has been changed. Size:  " +
+                                                                QString::number(temp_fileinfo.previous_state.size()) +
+                                                                " -> " + QString::number(temp_fileinfo.current_state.size()) + " bytes.");
                 }else{
                      // Файл существует
-                    emit OnFileExists(temp_fileinfo.current_state.filePath(), temp_fileinfo.current_state.size());
+                    emit signalFileExists(temp_fileinfo.current_state.filePath() +
+                                                            " --- File is exists. Size: " +
+                                                            QString::number(temp_fileinfo.current_state.size()) +
+                                                            " bytes.");
                 }
             }
             // Обновление старых данных под новые
@@ -200,7 +213,7 @@ void FileMonitor::CheckStateOfFiles(){
         refreshList();
 }
 
-
+/*
 // файл существует
 void FileMonitor::OutputEventFileExists(const QString &path, const int &currentSize) const{
     consoleOutput->Log(path + " --- File is exists. Size: " + QString::number(currentSize) + " bytes.");
@@ -217,4 +230,4 @@ void FileMonitor::OutputEventFileChanged(const QString &path, const int &oldSize
 }
 
 
-
+*/
