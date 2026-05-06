@@ -23,7 +23,7 @@ public:
     explicit FileMonitor (QObject *parent = nullptr) : QObject(parent) {}
 
     // конструктор по пути к файлу-списку
-    FileMonitor(QString & path_to_hostFile, ILogger * __logg);
+    FileMonitor(QString & path_to_hostFile);//, ILogger * __logg);
     // деструктор
     ~FileMonitor();
 
@@ -31,7 +31,7 @@ public:
     void CheckStateOfFiles();
 
     // Установка пути к хост-файлу и сущности-вывода
-    void Init(QString & path_to_hostFile, ILogger * Logg);
+    bool Init(QString & path_to_hostFile, ILogger * Logg);
 
     // геттеры
     unsigned int getSize() const;
@@ -43,26 +43,13 @@ signals:
     // значит файл изменился, значит файл по прошлому пути можно считать удалённым\утерянным
 
     // файл существует (сообщение что он существует и его размер)
-    void OnFileExists(QString path, int currentSize);
+    void signalFileExists(QString msg_log);//(QString path, int currentSize);
 
     // файл удалён, перемещён или переименован
-    void OnFileLost(QString path);
+    void signalFileLost(QString msg_log);//(QString path);
 
     // размер файла изменился на newSize
-    void OnFileChange(QString path, int oldSize, int newSize);
-
-
-public slots:
-
-
-
-// файл существует
-    void OutputEventFileExists(const QString &path, const int &currentSize) const;
-// файл удалён, перемещён или переименован
-    void OutputEventFileLost(const QString &path) const;
-// размер файла изменился на newSize
-    void OutputEventFileChanged(const QString &path, const int &oldSize, const int &newSize) const;
-
+    void signalFileChange(QString msg_log);//(QString path, int oldSize, int newSize);
 
 
 private:
@@ -74,7 +61,7 @@ private:
     // hostFile - Файл, в котором перечислены по-строчно абсолютные пути к файлам для наблюдения
     QString pathToHostFile;
     QMap<QString, fileStates> filesProperties;  // список наблюдаемых файлов
-    ILogger *consoleOutput;    // вывод
+    //ILogger *consoleOutput;    // вывод
 
 
     // проверить на наличие '.' и '..'

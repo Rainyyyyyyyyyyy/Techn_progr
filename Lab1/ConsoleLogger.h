@@ -6,13 +6,14 @@
 #include <QDebug>
 
 
-class ConsoleLogger : public ILogger {
+class ConsoleLogger : public ILogger{
 public:
-    ConsoleLogger() = default;
-    ~ConsoleLogger() = default;
 
-    // переопределение функции вывода - вывод на консоль QString data
-    void Log(const QString &data);
+    ConsoleLogger() {};
+    ~ConsoleLogger() {};
+
+    // переопределение log от базового класса
+    void Log(QString s) override;
 
 };
 
