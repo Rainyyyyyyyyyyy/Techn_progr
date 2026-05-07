@@ -61,7 +61,7 @@ private:
     // hostFile - Файл, в котором перечислены по-строчно абсолютные пути к файлам для наблюдения
     QString pathToHostFile;
     QMap<QString, fileStates> filesProperties;  // список наблюдаемых файлов
-    //ILogger *consoleOutput;    // вывод
+
 
 
     // проверить на наличие '.' и '..'

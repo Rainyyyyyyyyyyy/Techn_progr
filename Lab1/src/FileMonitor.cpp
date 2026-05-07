@@ -4,7 +4,7 @@
 // конструктор по пути к файлу-списку
 // в этом моменте старая и новая информация по файлах эквиваентны
 // (ввиду того, что создаются в одно и то же время - в момент появления в писке для наблюдения)
-FileMonitor::FileMonitor(QString & path_to_hostFile){//, ILogger * __logg){
+FileMonitor::FileMonitor(QString & path_to_hostFile){
     if(checkDotAndDotDot_path(path_to_hostFile)){
         throw ExceptionDotOrDotDotInHostPath();
     }
@@ -13,11 +13,6 @@ FileMonitor::FileMonitor(QString & path_to_hostFile){//, ILogger * __logg){
     QFile File_with_List(path_to_hostFile);
     if (File_with_List.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        //if(__logg != nullptr)consoleOutput = __logg;
-        //else {
-        //    File_with_List.close();
-        //    return;
-        //    }
         pathToHostFile = path_to_hostFile;
         QTextStream File_content(&File_with_List);
         while(!File_content.atEnd()){
@@ -25,16 +20,13 @@ FileMonitor::FileMonitor(QString & path_to_hostFile){//, ILogger * __logg){
             add_path(temp_path);
         }
     }else{
-        throw new ExceptionUnableToOpenFile; // EXCEPTION_UNABLE_TO_OPEN_FILE;
+        throw ExceptionUnableToOpenFile();
     }
 }
 
 
 // деструктор
-FileMonitor::~FileMonitor(){
-    //if(consoleOutput != NULL && consoleOutput != nullptr)delete consoleOutput;
-    //consoleOutput = NULL;
-}
+FileMonitor::~FileMonitor(){ }
 
 // добавить путь к файлу в fileProperties
 // returns 1 - added successfully
@@ -119,7 +111,7 @@ void FileMonitor::refreshList(){
             }
         }
     }else{
-        throw new ExceptionUnableToOpenFile;
+        throw ExceptionUnableToOpenFile();
     }
 }
 
@@ -146,7 +138,7 @@ bool FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
     if (File_with_List.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         /* проверка указателя *Logg */
-        if(Logg == nullptr){//consoleOutput = Logg;
+        if(Logg == nullptr){
             File_with_List.close();
             return false;
         }
@@ -212,22 +204,3 @@ void FileMonitor::CheckStateOfFiles(){
         // обновление списка наблюдаемых файлов
         refreshList();
 }
-
-/*
-// файл существует
-void FileMonitor::OutputEventFileExists(const QString &path, const int &currentSize) const{
-    consoleOutput->Log(path + " --- File is exists. Size: " + QString::number(currentSize) + " bytes.");
-}
-
-// файл удалён, перемещён или переименован
-void FileMonitor::OutputEventFileLost(const QString &path) const {
-    consoleOutput->Log(path + " --- File has been deleted, replaced or renamed.");
-}
-
-// размер файла изменился на newSize
-void FileMonitor::OutputEventFileChanged(const QString &path, const int &oldSize, const int &newSize) const {
-    consoleOutput->Log(path + " --- Size has been changed. Size:  " + QString::number(oldSize) + " -> " + QString::number(newSize) + " bytes.");
-}
-
-
-*/
