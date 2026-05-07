@@ -1,7 +1,6 @@
 #include <QCoreApplication>
 #include <QFileInfo>
 #include <QTextStream>
-//#include <iostream>
 #include <QString>
 
 #include <thread>
@@ -46,7 +45,7 @@ int main(int argc, char *argv[])
     while(!(QFileInfo::exists(path)));
 
 
-    IDelayer *Delayer1;// = new Delayer(1);
+    IDelayer *Delayer1;
     try{
         Delayer1 = new Delayer(1);
     }catch (CustomExceptions excp){
@@ -81,9 +80,3 @@ int main(int argc, char *argv[])
 
     return 0;
 }
-
-
-/*
-     *
-     * E:\Z_vsyakoe_dla_echeby\4k2sem\Technologii_Programmirovania(Andreeva)\laba1\Qt\try1(git_clone)\Techn_progr\Lab1\ListYtr.txt
-     */
