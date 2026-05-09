@@ -8,3 +8,13 @@ build-untitled-MyQTMinGW-Debug/
 Lab1/.vscode/
 
 .vscode/
+
+debug/
+
+release/
+
+Lab1/.qtc_clangd/
+
+build-untitled-MyQTMinGW-Profile/
+
+BUILDES/

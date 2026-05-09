@@ -1,30 +1,6 @@
 #include "FileMonitor.h"
 #include "FileMonitorExceptions.h"
 
-// конструктор по пути к файлу-списку
-// в этом моменте старая и новая информация по файлах эквиваентны
-// (ввиду того, что создаются в одно и то же время - в момент появления в писке для наблюдения)
-FileMonitor::FileMonitor(QString & path_to_hostFile){
-    if(checkDotAndDotDot_path(path_to_hostFile)){
-        throw ExceptionDotOrDotDotInHostPath();
-    }
-
-
-    QFile File_with_List(path_to_hostFile);
-    if (File_with_List.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        pathToHostFile = path_to_hostFile;
-        QTextStream File_content(&File_with_List);
-        while(!File_content.atEnd()){
-            QString temp_path = File_content.readLine();
-            add_path(temp_path);
-        }
-    }else{
-        throw ExceptionUnableToOpenFile();
-    }
-}
-
-
 // деструктор
 FileMonitor::~FileMonitor(){ }
 
@@ -33,17 +9,19 @@ FileMonitor::~FileMonitor(){ }
 // returns 0 - path is already exists in fileProperties and has not been added
 bool FileMonitor::add_path(QString &path){
 
-    if(checkDotAndDotDot_path(path)){
-        throw ExceptionDotOrDotDotInListToCheck();
-    }
+    if(path.size() == 0){ return false; }
     if(checkFileIsHidden_path(path)){
         throw ExceptionFileIsHidden();
+    }
+    if(checkFileisFile_path(path)){
+        throw ExceptionFilePathIsDirPath();
     }
     // проверка на существование уже такого пути, во избежание перезаписи
     if(!(filesProperties.contains(path))){
         QFileInfo rawData(path);
         QFileInfo rawData2(path);
-        filesProperties[path] = {rawData, rawData2};
+        filesProperties[path] = {rawData, rawData2, 0};
+        qDebug()<<"Path added: "<<path;
         return true;
     }
     else return false;
@@ -53,35 +31,33 @@ bool FileMonitor::add_path(QString &path){
 // returns 1 - removed successfully
 // returns 0 - path is not exists in fileProperties
 bool FileMonitor::remove_path(QString &path){
-    return filesProperties.remove(path);
+    if( filesProperties.remove(path)){
+        qDebug()<<"File removed from monitoring: "<<path;
+        return true;
+    }
+    return false;
 }
 
-/*  =   =   =   =   =   ПРОВЕРКИ    =   =   =   =   =   = */
-
-// проверить на наличие '.' и '..'
-bool FileMonitor::checkDotAndDotDot_path(QString path) const{
-    QFileInfo chekerPath_fileInfo(path);
-    path.chop(chekerPath_fileInfo.fileName().size());
-    return (path.contains("..") || path.contains("."));
+// проверить, что файл, а не папка
+bool FileMonitor::checkFileisFile_path(QString &path) const{
+    QFileInfo CheckerInfo(path);
+    CheckerInfo.refresh();
+    return CheckerInfo.isDir();
 }
-
-
 // проверить на предмет: файл скрыт
 bool FileMonitor::checkFileIsHidden_path(QString &path) const {
-    if(checkDotAndDotDot_path(path)){
-        throw ExceptionDotOrDotDotInListToCheck();
-    }
-    QFileInfo ChekerInfo(path);
-    ChekerInfo.refresh();
-    return ChekerInfo.isHidden();
-
-
+    QFileInfo CheckerInfo(path);
+    CheckerInfo.refresh();
+    return CheckerInfo.isHidden();
 }
 /*  =   =   =   =   =   =   =   =   =   ==  =   =   =   =   =   = */
 
 // перепрочитать (актуализировать) с список путей к файлам с файла-списка
 void FileMonitor::refreshList(){
     QFile File_with_List(pathToHostFile);
+    if(checkFileIsHidden_path(pathToHostFile)){
+        throw ExceptionFileIsHidden();
+    }
     if (File_with_List.open(QIODevice::ReadOnly | QIODevice::Text))
     {
         QTextStream File_content(&File_with_List);
@@ -90,7 +66,7 @@ void FileMonitor::refreshList(){
         while(!File_content.atEnd()){
             QString temp_path = File_content.readLine();
             if(!temp_path.isEmpty() && !listOfPaths.contains(temp_path)){
-            listOfPaths.append(temp_path);
+                listOfPaths.append(temp_path);
             }
         }
         File_with_List.close();
@@ -99,9 +75,9 @@ void FileMonitor::refreshList(){
         }
         QList<QString> currentList = filesProperties.keys();
 
-        for(QString &local_path_prev : currentList){
-            if(!listOfPaths.contains(local_path_prev)){
-                remove_path(local_path_prev);
+        for(QString &path_from_prev_list : currentList){
+            if(!listOfPaths.contains(path_from_prev_list)){
+                remove_path(path_from_prev_list);
             }
         }
 
@@ -130,18 +106,21 @@ unsigned int FileMonitor::getSize() const{
 // если ILogger * ==nullptr или путь к хост-файлу некорректный или не изменился,
 // то инициализация не происходит, а исключение не выбрасывается и не отсоединяются старые сигналы
 bool FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
-    if(checkDotAndDotDot_path(path_to_hostFile)){
-        throw ExceptionDotOrDotDotInHostPath();
+    if(!path_to_hostFile.endsWith(".txt")){
+        throw ExceptionIncorrectFormatOfHostfile();
+    }
+    if(checkFileIsHidden_path(path_to_hostFile)){
+        throw ExceptionHostFileIsHidden();
+    }
+    /* проверка указателя *Logg */
+    if(Logg == nullptr){
+        return false;
     }
 
+        // начинаем читать файл по пути path_to_hostFile
     QFile File_with_List(path_to_hostFile);
     if (File_with_List.open(QIODevice::ReadOnly | QIODevice::Text))
     {
-        /* проверка указателя *Logg */
-        if(Logg == nullptr){
-            File_with_List.close();
-            return false;
-        }
         /* Проверка пути к хост-файлу */
         if(pathToHostFile != path_to_hostFile)pathToHostFile = path_to_hostFile;
         else{
@@ -158,46 +137,45 @@ bool FileMonitor::Init(QString &path_to_hostFile, ILogger *Logg){
         }
     }else{
         throw ExceptionUnableToOpenFile();
-        return false;
     }
     // если корректно инициализировались, то отключаем старые сигналы, подключаем новые
     // (во избежание дублирования)
     QObject::disconnect(this, nullptr, nullptr, nullptr);
-    QObject::connect(this, &FileMonitor::signalFileChange, Logg, &ILogger::Log);    //ConsoleLogger::OutputEventFileChanged);
-    QObject::connect(this, &FileMonitor::signalFileExists,   Logg, &ILogger::Log);    //&ConsoleLogger::OutputEventFileExists);
-    QObject::connect(this, &FileMonitor::signalFileLost,     Logg, &ILogger::Log);    //&ConsoleLogger::OutputEventFileLost);
+    QObject::connect(this, &FileMonitor::signalFileChange,       Logg, &ILogger::Log);
+    QObject::connect(this, &FileMonitor::signalFileExistence,     Logg, &ILogger::Log);
 
 }
 
 
+
 void FileMonitor::CheckStateOfFiles(){
-    qDebug()<<"===============================================";
         for(auto  & temp_fileinfo : filesProperties){
         // актуализация новых данных fileinfo current_state
             temp_fileinfo.current_state.refresh();
             /* проверка на свойство "файл скрыт" */
-            if(temp_fileinfo.current_state.isHidden()){
+            QString tempfilepath = temp_fileinfo.current_state.filePath();
+            if(checkFileIsHidden_path(tempfilepath)){
                 throw ExceptionFileIsHidden();
             }
-            if(!temp_fileinfo.current_state.exists()){
-                // Файл не найден
-                emit signalFileLost(temp_fileinfo.current_state.filePath() +
-                                                        " --- File has been deleted, replaced or renamed.");
-            }else{
-                if((temp_fileinfo.current_state.size()) != (temp_fileinfo.previous_state.size())){
-                    // Размер файла изменился
-                    emit signalFileChange(temp_fileinfo.current_state.absoluteFilePath() +
+
+            // обновление флагов состояния-существования
+            temp_fileinfo.exists_flags = ((temp_fileinfo.exists_flags<<1) |  (bool)(temp_fileinfo.current_state.exists()))&3;
+
+            // разбор случаев флагов состояния-существования
+            switch (temp_fileinfo.exists_flags) {
+            case 1:  emit signalFileExistence(temp_fileinfo.current_state.filePath() + " --- exists now."); break;
+            case 2:  emit signalFileExistence(temp_fileinfo.current_state.filePath() + " --- deleted."); break;
+            default: break;
+            }
+
+            if((temp_fileinfo.current_state.size()) != (temp_fileinfo.previous_state.size()) && temp_fileinfo.exists_flags == 3){
+                    // Размер файла изменился ( и файл продолжает существовать )
+                emit signalFileChange(temp_fileinfo.current_state.filePath() +
                                                                 " --- Size has been changed. Size:  " +
                                                                 QString::number(temp_fileinfo.previous_state.size()) +
                                                                 " -> " + QString::number(temp_fileinfo.current_state.size()) + " bytes.");
-                }else{
-                     // Файл существует
-                    emit signalFileExists(temp_fileinfo.current_state.filePath() +
-                                                            " --- File is exists. Size: " +
-                                                            QString::number(temp_fileinfo.current_state.size()) +
-                                                            " bytes.");
                 }
-            }
+
             // Обновление старых данных под новые
             temp_fileinfo.previous_state = temp_fileinfo.current_state;
         }

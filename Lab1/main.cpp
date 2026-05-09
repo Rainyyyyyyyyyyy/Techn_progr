@@ -36,32 +36,25 @@
 int main(int argc, char *argv[])
 {
     QTextStream qin(stdin);             // для ввода
+    QCoreApplication qcoreappa(argc, argv);
+    qDebug()<<"Current relative path: "<<QCoreApplication::applicationFilePath()<<Qt::endl;
+
+    // path to host-file
     QString path;
-    do{
-        qDebug()<<"Enter path to file-list: ";
-        qin>>path;
-        qin.flush();
-    }
-    while(!(QFileInfo::exists(path)));
+    qDebug()<<"Enter path to file-list: ";
+    qin>>path;
 
 
-    IDelayer *Delayer1;
-    try{
-        Delayer1 = new Delayer(1);
-    }catch (CustomExceptions excp){
-        qDebug()<<(excp.what())<<"  Code: "<<excp.getCode();
-        return 1;
-    }
-    ILogger *__logger = new ConsoleLogger;
 
+    // Наблюдатель, для него необходима сущность-вывод (ILogger, ConsoleLogger)
     FileMonitor FileMonitor1;
+    Delayer delayer1;
+    ConsoleLogger logger1;
 
     try{
-        FileMonitor1.Init(path, __logger);
+        FileMonitor1.Init(path, &logger1);
     }catch (CustomExceptions &excp){
         qDebug()<<(excp.what())<<"  Code: "<<excp.getCode();
-        delete Delayer1;
-        delete __logger;
         return 1;
     }
 
@@ -69,12 +62,10 @@ int main(int argc, char *argv[])
     try{
         while(true){
             FileMonitor1.CheckStateOfFiles();
-            Delayer1->wait();
+            delayer1.wait();
         }
     }catch (CustomExceptions &excp){
         qDebug()<<(excp.what())<<"  Code: "<<excp.getCode();
-        delete Delayer1;
-        delete __logger;
         return 1;
     }
 

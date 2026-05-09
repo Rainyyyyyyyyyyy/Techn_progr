@@ -20,10 +20,9 @@ class FileMonitor : public QObject{
     Q_OBJECT
 
 public:
-    explicit FileMonitor (QObject *parent = nullptr) : QObject(parent) {}
+    explicit FileMonitor (QObject *parent = nullptr) : QObject(parent) { pathToHostFile = ""; }
 
-    // конструктор по пути к файлу-списку
-    FileMonitor(QString & path_to_hostFile);//, ILogger * __logg);
+
     // деструктор
     ~FileMonitor();
 
@@ -42,8 +41,8 @@ signals:
     // изменение имени или удаление файла равноценно - изменить путь к файлу
     // значит файл изменился, значит файл по прошлому пути можно считать удалённым\утерянным
 
-    // файл существует (сообщение что он существует и его размер)
-    void signalFileExists(QString msg_log);//(QString path, int currentSize);
+    // файл появился или удалился (сообщение что он существует и его размер)
+    void signalFileExistence(QString msg_log);//(QString path, int currentSize);
 
     // файл удалён, перемещён или переименован
     void signalFileLost(QString msg_log);//(QString path);
@@ -57,6 +56,7 @@ private:
     struct fileStates{
         QFileInfo previous_state;     // информация старая
         QFileInfo current_state;      // информация новая
+        unsigned char exists_flags;     // bit_1 - old info. bit_0 - new info: 00 - deleted\deleted as-well     01 - deleted\arrived!   10 - exists\deleted     11 - exists\exists as-well
     };
     // hostFile - Файл, в котором перечислены по-строчно абсолютные пути к файлам для наблюдения
     QString pathToHostFile;
@@ -65,9 +65,11 @@ private:
 
 
     // проверить на наличие '.' и '..'
-    bool checkDotAndDotDot_path(QString path) const;
+    //bool checkDotAndDotDot_path(QString path) const;
     // проверить на предмет: файл скрыт
     bool checkFileIsHidden_path(QString &path) const;
+    // проверить, что файл, а не папка
+    bool checkFileisFile_path(QString &path) const;
     // добавить путь к файлу в fileProperties
     bool add_path(QString &path);
     // удалить путь к файлу из fileProperties
