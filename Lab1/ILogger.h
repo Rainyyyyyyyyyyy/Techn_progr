@@ -15,11 +15,11 @@ class ILogger : public QObject
 
 public:
 
-       virtual ~ILogger() {}
+    virtual ~ILogger() {}
 
     // функция вывода
 public slots:
-       virtual void Log(QString) = 0;
+    virtual void Log(QString) = 0;
 
 };
 
