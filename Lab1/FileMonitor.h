@@ -20,7 +20,7 @@ class FileMonitor : public QObject{
     Q_OBJECT
 
 public:
-    explicit FileMonitor (QObject *parent = nullptr) : QObject(parent) { pathToHostFile = ""; }
+    explicit FileMonitor (QObject *parent = nullptr) : QObject(parent) { }
 
 
     // деструктор
@@ -29,13 +29,15 @@ public:
     // проверить состояние файлов - сравнение старой и новой информации и логирование событий
     void CheckStateOfFiles();
 
-    // Установка пути к хост-файлу и сущности-вывода
-    bool Init(QString & path_to_hostFile, ILogger * Logg);
+    // Установка списка (QVector) для наблюдения и сущности-вывода (ILogger)
+    bool Init(const QVector <QString> &paths, ILogger *Logg);
 
     // геттеры
     unsigned int getSize() const;
     QList <QString> getList() const;
 
+    // перепрочитать (актуализировать) список путей к файлам
+    void refreshList(const QVector <QString> &paths);
 
 signals:
     // изменение имени или удаление файла равноценно - изменить путь к файлу
@@ -51,6 +53,15 @@ signals:
     void signalFileChange(QString msg_log);//(QString path, int oldSize, int newSize);
 
 
+
+    // сигнал о том, что была вызвана инициализация ( Init() )
+    void signalInitiated(QString msg_log = "Initialization was called");
+
+    // сигнал о том, что файл добавился под наблюдение
+    void signalFileAddedUnderMonitoring(QString msg_log);
+
+    // сигнал о том, что файл удалён из-под наблюдения
+    void signalFileRemovedFromMonitoring(QString msg_log);
 private:
 
     struct fileStates{
@@ -58,8 +69,8 @@ private:
         QFileInfo current_state;      // информация новая
         unsigned char exists_flags;     // bit_1 - old info. bit_0 - new info: 00 - deleted\deleted as-well     01 - deleted\arrived!   10 - exists\deleted     11 - exists\exists as-well
     };
-    // hostFile - Файл, в котором перечислены по-строчно абсолютные пути к файлам для наблюдения
-    QString pathToHostFile;
+
+
     QMap<QString, fileStates> filesProperties;  // список наблюдаемых файлов
 
 
@@ -67,15 +78,14 @@ private:
     // проверить на наличие '.' и '..'
     //bool checkDotAndDotDot_path(QString path) const;
     // проверить на предмет: файл скрыт
-    bool checkFileIsHidden_path(QString &path) const;
+    bool checkFileIsHidden_path(const QString &path) const;
     // проверить, что файл, а не папка
-    bool checkFileisFile_path(QString &path) const;
+    bool checkFileisFile_path(const QString &path) const;
     // добавить путь к файлу в fileProperties
-    bool add_path(QString &path);
+    bool add_path(const QString &path);
     // удалить путь к файлу из fileProperties
-    bool remove_path(QString &path);
-    // перепрочитать (актуализировать) с список путей к файлам с файла-списка
-    void refreshList();
+    bool remove_path(const QString &path);
+
 
 
 

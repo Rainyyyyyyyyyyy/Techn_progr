@@ -11,7 +11,7 @@
 #define EXCEPTION_HOSTFILE_IS_HIDDEN 108
 #define EXCEPTION_INCORRECT_FORMAT_OF_HOSTFILE 109
 #define EXCEPTION_PATH_TO_FILE_IS_PATH_TO_DIR 110
-
+#define EXCPTION_FILE_IS_FROM_SYSTEM_SPACE 111
 
 
 /* Исключение: FileList пуст (для CheckStateOfFiles) */
@@ -48,6 +48,12 @@ public:
 class ExceptionFilePathIsDirPath : public CustomExceptions {
 public:
     ExceptionFilePathIsDirPath() : CustomExceptions(EXCEPTION_PATH_TO_FILE_IS_PATH_TO_DIR, "Warning! Got path to directory, but path to file excepted!"){}
+};
+
+/* Исключение: получен путь к файлу из системмного пространства */
+class ExceptionFileIsFromSystemSpace : public CustomExceptions {
+public:
+    ExceptionFileIsFromSystemSpace() : CustomExceptions(EXCPTION_FILE_IS_FROM_SYSTEM_SPACE, "Warning! Got path from system space"){}
 };
 
 
