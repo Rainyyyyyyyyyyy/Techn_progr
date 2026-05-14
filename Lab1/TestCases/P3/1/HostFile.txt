@@ -1,0 +1,3 @@
+../TestCases/P3/1/file1.txt
+../TestCases/P3/1/file2.txt
+../TestCases/P3/1/file3.txt
