@@ -1,7 +1,6 @@
 #ifndef FILEMONITOR_H
 #define FILEMONITOR_H
 
-#endif // FILEMONITOR_H
 
 #include <QString>
 #include <QObject>
@@ -44,13 +43,13 @@ signals:
     // значит файл изменился, значит файл по прошлому пути можно считать удалённым\утерянным
 
     // файл появился или удалился (сообщение что он существует и его размер)
-    void signalFileExistence(QString msg_log);//(QString path, int currentSize);
+    void signalFileExists(QString msg_log);
 
     // файл удалён, перемещён или переименован
-    void signalFileLost(QString msg_log);//(QString path);
+    void signalFileLost(QString msg_log);
 
     // размер файла изменился на newSize
-    void signalFileChange(QString msg_log);//(QString path, int oldSize, int newSize);
+    void signalFileChange(QString msg_log);
 
 
 
@@ -74,19 +73,18 @@ private:
     QMap<QString, fileStates> filesProperties;  // список наблюдаемых файлов
 
 
-
-    // проверить на наличие '.' и '..'
-    //bool checkDotAndDotDot_path(QString path) const;
     // проверить на предмет: файл скрыт
-    bool checkFileIsHidden_path(const QString &path) const;
+    bool checkHiddenPath(const QString &path) const;
     // проверить, что файл, а не папка
-    bool checkFileisFile_path(const QString &path) const;
+    bool checkFilePath(const QString &path) const;
+    // проверка, что файл не имеет системных трибутов
+    bool checkSystemPath(const QString &path) const;
     // добавить путь к файлу в fileProperties
-    bool add_path(const QString &path);
+    bool addPath(const QString &path);
     // удалить путь к файлу из fileProperties
-    bool remove_path(const QString &path);
-
-
-
+    bool removePath(const QString &path);
 
 };
+
+
+#endif // FILEMONITOR_H

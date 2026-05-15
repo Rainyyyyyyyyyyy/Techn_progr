@@ -10,7 +10,6 @@ QMAKE_CFLAGS_RELEASE = -O0
 
 SOURCES += \
         src/ConsoleLogger.cpp \
-        src/CustomException.cpp \
         src/Delayer.cpp \
         src/FileMonitor.cpp \
         main.cpp

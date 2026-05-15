@@ -152,7 +152,7 @@ int main(int argc, char *argv[])
 {
 
 
-/*
+
         QCoreApplication qcoreappa(argc, argv);
         qDebug()<<"Current relative path: "<<QCoreApplication::applicationFilePath()<<Qt::endl;
 
@@ -193,8 +193,13 @@ int main(int argc, char *argv[])
     try{
         while(true){
             FileMonitor11.CheckStateOfFiles();
-            if(ReadHostFile(path, paths) == false){
-                    qDebug()<<"exit? ('.exit', 'continue'): ";
+            while(ReadHostFile(path, paths) == false){
+                    qDebug()<<"exit? ('.exit', '.continue' = '.reset'): ";
+                    askAction(act);
+                    if(act == ".exit"){
+                        qDebug()<<"Exit...";
+                        return 0;
+                    }
             }
             FileMonitor11.refreshList(paths);
 
@@ -204,7 +209,7 @@ int main(int argc, char *argv[])
             qDebug()<<(excp.what())<<"  Code: "<<excp.getCode();
             return 1;
     }
-    */
+
 
 
     /// =======       TEST-CASES      ======== ///
@@ -442,13 +447,6 @@ int main(int argc, char *argv[])
     }
     return 0;
     */
-
-
-
-
-
-
-
 
 
 

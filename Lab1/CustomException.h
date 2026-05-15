@@ -12,11 +12,11 @@ protected:
     std::string message;    // описание
 public:
     // конструктор по значениям
-    CustomExceptions(unsigned int code__, const char * message__);
+    CustomExceptions(unsigned int code__=0, const char * message__ = "Unexpected error.") : errorCode(code__), message(message__) {};
     // переопределение const char * std::exception::what()
-    const char *what() const noexcept override;
+    const char *what() const noexcept override {return message.c_str(); }
     // getter кода ошибки/исключения
-    unsigned int getCode() const;
+    unsigned int getCode() const { return errorCode; }
 };
 
 
