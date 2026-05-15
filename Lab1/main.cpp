@@ -193,8 +193,13 @@ int main(int argc, char *argv[])
     try{
         while(true){
             FileMonitor11.CheckStateOfFiles();
-            if(ReadHostFile(path, paths) == false){
-                    qDebug()<<"exit? ('.exit', 'continue'): ";
+            while(ReadHostFile(path, paths) == false){
+                    qDebug()<<"exit? ('.exit', '.continue' = '.reset'): ";
+                    askAction(act);
+                    if(act == ".exit"){
+                        qDebug()<<"Exit...";
+                        return 0;
+                    }
             }
             FileMonitor11.refreshList(paths);
 
