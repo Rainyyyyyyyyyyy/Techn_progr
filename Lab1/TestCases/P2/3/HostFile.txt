@@ -1,0 +1,2 @@
+../TestCases/P2/3/filehidden.txt
+../TestCases/P2/3/file2.txt
